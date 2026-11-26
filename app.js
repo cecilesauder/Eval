@@ -97,6 +97,28 @@ const exerciseQuestionMap = {
 };
 exercises.forEach(exercise => { if (exerciseQuestionMap[exercise.number]) exercise.questionIds = exerciseQuestionMap[exercise.number]; });
 
+// Supports autonomes : la synthèse vocale permet à l'élève de relancer une
+// dictée autant de fois que nécessaire, sans afficher le mot avant sa saisie.
+const dogOfStoneText = `L’histoire se déroule au Vietnam. Un mandarin est une personne importante, qui a du pouvoir. Autrefois, il y avait un étudiant qui se rendait tous les jours à un village voisin pour suivre les enseignements d’un lettré de renom. À l’entrée de ce village se dressait la statue en pierre d’un chien. Chaque fois qu’il passait devant le chien de pierre, comme par enchantement ce dernier se levait, remuant sa queue pour le saluer. Un jour, intrigué, l’étudiant s’arrêta et le questionna. Le chien de pierre lui annonça qu’il serait le seul de sa région à être reçu au concours et deviendrait mandarin. L’étudiant rapporta la nouvelle à ses parents. Ceux-ci se montrèrent alors hautains envers les gens du village et piétinèrent leurs récoltes. Les gens se plaignirent. Le chien de pierre prévint l’étudiant que son nom avait été rayé de la liste des lauréats. Les parents présentèrent leurs excuses et changèrent de conduite. L’étudiant poursuivit ses études avec application. Grâce à sa constance et au repentir de ses parents, il réussit finalement le concours et devint un gouverneur juste et efficace.`;
+const mermaidPassage = `Ce château était construit de pierres jaunes et luisantes ; de grands escaliers de marbre conduisaient à l’intérieur et au jardin ; plusieurs dômes dorés brillaient sur le toit, et entre les colonnes des galeries se trouvaient des statues de marbre qui paraissaient vivantes. Les salles, magnifiques, étaient ornées de rideaux et de tapis incomparables, et les murs couverts de grandes peintures. Dans le grand salon, le soleil réchauffait, à travers un plafond de cristal, les plantes les plus rares, qui poussaient dans un grand bassin au-dessous de plusieurs jets d’eau. Dès lors, la petite sirène revint souvent à cet endroit, la nuit comme le jour ; elle s’approchait de la côte, et osait même s’asseoir sous le grand balcon de marbre qui projetait son ombre bien avant sur les eaux. De là, elle voyait au clair de la lune le jeune prince, qui se croyait seul ; souvent, au son de la musique, il passait devant elle dans un riche bateau pavoisé, et ceux qui apercevaient son voile blanc dans les roseaux verts la prenaient pour un cygne ouvrant ses ailes. Elle entendait aussi les pêcheurs dire beaucoup de bien du jeune prince, et alors elle se réjouissait de lui avoir sauvé la vie, quoiqu’il l’ignorât complètement.`;
+const dictationNumbers = ["5 700", "52 365", "25 601", "352 468", "1 047", "900 000", "86 079", "7 098", "630 017", "310 040"];
+const dictationWords = ["un champignon", "une dent", "un moment", "un ordinateur", "beaucoup", "une direction", "gourmand", "souvent", "un téléphone", "maintenant", "une médaille", "pourquoi"];
+
+Object.assign(questions, {
+  "ex02-1": { type: "input", title: "Nombre 1 sur 10", prompt: "Écoute le nombre puis écris-le en chiffres.", answer: "5700", placeholder: "Écris le nombre", inputMode: "numeric", speakText: "cinq mille sept cents" },
+  "ex09-1": { type: "input", title: "Mot 1 sur 12", prompt: "Écoute le mot puis écris-le. Tu peux relancer la lecture autant de fois que nécessaire.", answer: "champignon", placeholder: "Écris le mot", inputMode: "text", speakText: "un champignon" },
+  "ex23-1": { type: "choice", title: "Question 1", prompt: "L’étudiant va chaque jour au village voisin pour…", options: ["suivre un enseignement.", "parler avec le chien.", "rendre visite à ses parents.", "mener paître les buffles."], answer: 0, audioText: dogOfStoneText },
+  "ex30-1": { type: "input", title: "Lecture fluide", prompt: "Lis le texte à voix haute pendant une minute, puis indique le nombre de mots correctement lus.", answer: null, placeholder: "Nombre de mots lus", inputMode: "numeric", passage: mermaidPassage, helper: "Le texte contient 204 mots. Le chronomètre de l’exercice dure une minute." }
+});
+
+// Chaque mot et chaque nombre est un item distinct : l'élève avance sans
+// adulte et peut réécouter uniquement l'élément en cours.
+dictationNumbers.forEach((spoken, index) => { const id = `ex02-${index + 1}`; questions[id] = { type: "input", title: `Nombre ${index + 1} sur ${dictationNumbers.length}`, prompt: "Écoute le nombre puis écris-le en chiffres.", answer: spoken.replace(/\s/g, ""), placeholder: "Écris le nombre", inputMode: "numeric", speakText: spoken }; });
+dictationWords.forEach((word, index) => { const id = `ex09-${index + 1}`; questions[id] = { type: "input", title: `Mot ${index + 1} sur ${dictationWords.length}`, prompt: "Écoute le mot puis écris-le. Tu peux relancer la lecture autant de fois que nécessaire.", answer: word.replace(/^(un|une) /, ""), placeholder: "Écris le mot", inputMode: "text", speakText: word }; });
+exerciseQuestionMap[2] = dictationNumbers.map((_, index) => `ex02-${index + 1}`);
+exerciseQuestionMap[9] = dictationWords.map((_, index) => `ex09-${index + 1}`);
+exercises.forEach(exercise => { if (exerciseQuestionMap[exercise.number]) exercise.questionIds = exerciseQuestionMap[exercise.number]; });
+
 const storyExcerpt = `Toshiro franchit le portail qui s’ouvrait sur le parc. Le matin même, ils avaient terminé le cerf-volant, fait de papier tendu sur des tiges de bambou entrecroisées. Il était magnifique, d’un rose lumineux sur lequel se détachait un dragon émeraude, et Toshiro en était très fier.\n\nPlus tard, une flaque d’eau offrit un miroir aux nuées. Puisque Grand-Père Satô ne pouvait plus lever la tête, c’est là qu’il contemplerait le merveilleux spectacle. À la fin de l’histoire, Toshiro trouve les mots pour décrire la beauté du paysage à son grand-père.`;
 
 const defaultState = { screen: "home", student: "", sequenceId: null, questionIndex: 0, answers: {}, timerEndAt: null };
@@ -137,10 +159,13 @@ function renderExerciseIntro() {
   timerInterval = setInterval(updateTimer, 1000);
 }
 function renderAnswerControl(question, savedAnswer) {
-  if (question.type === "choice") return `<form id="answer-form" class="option-list">${question.options.map((option, index) => `<label class="option"><input type="radio" name="answer" value="${index}" ${Number(savedAnswer) === index ? "checked" : ""}><span>${option}</span></label>`).join("")}</form>`;
+  const audioButton = question.audioText ? `<button type="button" class="secondary-button speak-button" data-speak="${encodeURIComponent(question.audioText)}">Écouter le texte</button><details><summary>Afficher le texte</summary><div class="source-text reading-text">${question.audioText}</div></details>` : "";
+  if (question.type === "choice") return `${audioButton}<form id="answer-form" class="option-list">${question.options.map((option, index) => `<label class="option"><input type="radio" name="answer" value="${index}" ${Number(savedAnswer) === index ? "checked" : ""}><span>${option}</span></label>`).join("")}</form>`;
   const value = savedAnswer === undefined ? "" : escapeHTML(savedAnswer);
   const helper = question.helper ? `<p class="instruction">${question.helper}</p>` : "";
-  return `${helper}<form id="answer-form"><label class="field-label" for="free-answer">Ta réponse</label><input id="free-answer" class="text-input" name="answer" type="text" inputmode="${question.inputMode || "text"}" value="${value}" placeholder="${question.placeholder || "Écris ta réponse"}"></form>`;
+  const passage = question.passage ? `<div class="source-text reading-text">${question.passage}</div>` : "";
+  const speakButton = question.speakText ? `<button type="button" class="secondary-button speak-button" data-speak="${encodeURIComponent(question.speakText)}">Lire le mot</button>` : "";
+  return `${passage}${audioButton}${speakButton}${helper}<form id="answer-form"><label class="field-label" for="free-answer">Ta réponse</label><input id="free-answer" class="text-input" name="answer" type="text" inputmode="${question.inputMode || "text"}" value="${value}" placeholder="${question.placeholder || "Écris ta réponse"}"></form>`;
 }
 function renderQuestion() {
   const exercise = currentSequence(); const question = currentQuestion();
@@ -160,6 +185,16 @@ function showToast(message) { const toast = document.createElement("div"); toast
 screen.addEventListener("click", event => {
   const exerciseButton = event.target.closest("[data-sequence]");
   if (exerciseButton) { const exercise = exercises.find(item => item.id === exerciseButton.dataset.sequence); setState({ screen: exercise.questionIds.length ? "question" : "intro", sequenceId: exercise.id, questionIndex: 0, timerEndAt: null }); return; }
+  const speakButton = event.target.closest("[data-speak]");
+  if (speakButton) {
+    if (!("speechSynthesis" in window)) { showToast("La lecture audio n’est pas disponible dans ce navigateur."); return; }
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(decodeURIComponent(speakButton.dataset.speak));
+    utterance.lang = "fr-FR";
+    utterance.rate = 0.82;
+    window.speechSynthesis.speak(utterance);
+    return;
+  }
   const actionButton = event.target.closest("[data-action]"); if (!actionButton) return;
   const action = actionButton.dataset.action;
   if (action === "start") setState({ screen: "student" });

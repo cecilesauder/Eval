@@ -65,6 +65,8 @@ p { line-height: 1.65; }
 .timer-badge.expired { background: #7d2635; }
 .question-layout { display: grid; grid-template-columns: minmax(0, 1fr) 270px; gap: 22px; align-items: start; }
 .source-text { background: #f7f3e9; border-left: 5px solid var(--yellow); padding: 20px 22px; border-radius: 10px; color: #394b58; font-family: Georgia, serif; line-height: 1.65; max-height: 390px; overflow: auto; }
+.reading-text { white-space: pre-line; max-height: 460px; margin: 16px 0; }
+.speak-button { margin: 10px 0; }
 .instruction { color: var(--muted); margin-top: -4px; }
 .option-list { display: grid; gap: 11px; margin-top: 22px; }
 .option { display: flex; align-items: center; gap: 14px; border: 2px solid var(--line); border-radius: 14px; padding: 14px 16px; min-height: 58px; background: white; transition: border .15s, background .15s; }

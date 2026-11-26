@@ -16,6 +16,7 @@ L'application fonctionne côté navigateur, sans compte et sans serveur. Les ré
 - accord des adjectifs ;
 - lecture de fractions ;
 - 30 exercices interactifs avec QCM, saisie numérique ou textuelle et réponses libres adaptées à chaque activité ;
+- textes intégrés pour la lecture et la compréhension orale, avec boutons de synthèse vocale répétables pour les dictées ;
 - bilan final par séquence ;
 - reprise locale d'une session interrompue ;
 - durée officielle affichée et décomptée pour chacun des 30 exercices, selon le guide professeur ;

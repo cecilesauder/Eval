@@ -12,6 +12,9 @@ Ouvrir `index.html` dans un navigateur récent. Aucun serveur, compte, package o
 - catalogue complet des 30 exercices répartis entre français et mathématiques ;
 - une activité interactive pour chacun des 30 exercices ;
 - QCM, saisies numériques ou textuelles et réponses libres selon la nature de l'exercice ;
+- texte complet de lecture pour l'exercice 30, avec saisie du nombre de mots lus ;
+- texte complet de compréhension orale pour l'exercice 23, lisible autant de fois que nécessaire ;
+- douze boutons « Lire le mot » pour l'exercice 9 et lecture répétable des nombres dictés de l'exercice 2 via la synthèse vocale du navigateur ;
 - réponses tactiles sous forme de QCM ;
 - temps réglementaire affiché et décompté pour chaque exercice : 39 min (exercice 1), 1 min 20 (exercice 10) et 1 min 30 (exercice 19) ;
 - progression par séquence et bilan final ;
