@@ -17,22 +17,28 @@ const sequences = [
   {
     id: "lecture",
     number: "01",
-    title: "Comprendre un texte",
+    title: "Exercice 1 · Comprendre un texte",
     description: "Le cerf-volant de Toshiro — répondre à des questions après lecture.",
+    durationSeconds: 39 * 60,
+    durationLabel: "39 minutes",
     questions: ["lecture-1", "lecture-2", "lecture-3"]
   },
   {
     id: "grammaire",
     number: "02",
-    title: "Accorder les adjectifs",
+    title: "Exercice 10 · Accorder les adjectifs",
     description: "Choisir la forme correctement accordée.",
+    durationSeconds: 80,
+    durationLabel: "1 min 20",
     questions: ["grammaire-1", "grammaire-2"]
   },
   {
     id: "fractions",
     number: "03",
-    title: "Lire les fractions",
+    title: "Exercice 19 · Lire les fractions",
     description: "Identifier une fraction supérieure ou égale à 1.",
+    durationSeconds: 90,
+    durationLabel: "1 min 30",
     questions: ["fractions-1", "fractions-2"]
   }
 ];
@@ -70,10 +76,11 @@ const questions = {
 
 const storyExcerpt = `Toshiro franchit le portail qui s’ouvrait sur le parc. Le matin même, ils avaient terminé le cerf-volant, fait de papier tendu sur des tiges de bambou entrecroisées. Il était magnifique, d’un rose lumineux sur lequel se détachait un dragon émeraude, et Toshiro en était très fier.\n\nPlus tard, une flaque d’eau offrit un miroir aux nuées. Puisque Grand-Père Satô ne pouvait plus lever la tête, c’est là qu’il contemplerait le merveilleux spectacle. À la fin de l’histoire, Toshiro trouve les mots pour décrire la beauté du paysage à son grand-père.`;
 
-const defaultState = { screen: "home", student: "", sequenceId: null, questionIndex: 0, answers: {}, completed: false };
+const defaultState = { screen: "home", student: "", sequenceId: null, questionIndex: 0, answers: {}, completed: false, timerEndAt: null };
 let state = loadState();
 const screen = document.querySelector("#screen");
 const resetButton = document.querySelector("#reset-button");
+let timerInterval = null;
 
 function loadState() {
   try { return { ...defaultState, ...JSON.parse(localStorage.getItem(STORAGE_KEY)) }; }
@@ -88,8 +95,26 @@ function allQuestionIds() { return sequences.flatMap(sequence => sequence.questi
 function answeredCount() { return allQuestionIds().filter(id => state.answers[id] !== undefined).length; }
 function totalQuestions() { return allQuestionIds().length; }
 function button(label, action, className = "primary-button") { return `<button type="button" class="${className}" data-action="${action}">${label}</button>`; }
+function formatTime(seconds) { const minutes = Math.floor(seconds / 60); const remainingSeconds = seconds % 60; return `${minutes}:${String(remainingSeconds).padStart(2, "0")}`; }
+function stopTimer() { if (timerInterval) { clearInterval(timerInterval); timerInterval = null; } }
+function finishSequence(reason = "completed") {
+  stopTimer();
+  state = { ...state, screen: "sequences", sequenceId: null, questionIndex: 0, timerEndAt: null };
+  saveState();
+  render();
+  if (reason === "timeout") showToast("Le temps est écoulé. L’exercice est terminé.");
+}
+function updateTimer() {
+  const badge = document.querySelector("#timer-badge");
+  if (!badge || !state.timerEndAt) return;
+  const remaining = Math.max(0, Math.ceil((state.timerEndAt - Date.now()) / 1000));
+  badge.textContent = `Temps restant : ${formatTime(remaining)}`;
+  badge.classList.toggle("warning", remaining <= 30 && remaining > 0);
+  if (remaining === 0) finishSequence("timeout");
+}
 
 function render() {
+  stopTimer();
   resetButton.hidden = state.screen === "home";
   if (state.screen === "home") renderHome();
   if (state.screen === "student") renderStudent();
@@ -106,7 +131,6 @@ function renderHome() {
       <p class="lead">Un parcours calme et guidé pour répondre aux exercices de français et de mathématiques sur tablette.</p>
       <div class="button-row">${button("Commencer une évaluation", "start")}${state.student ? button("Reprendre la session", "resume", "secondary-button") : ""}</div>
     </div>
-    <div class="hero-art" aria-label="Illustration décorative d’un cerf-volant"><div class="kite"></div><p class="art-caption">Lire, réfléchir, répondre. À son rythme.</p></div>
   </section>`;
 }
 
@@ -125,21 +149,24 @@ function renderSequences() {
   const completed = answeredCount();
   screen.innerHTML = `<section><div class="progress-wrap"><div class="progress-meta"><span>Progression générale</span><strong>${completed}/${totalQuestions()} réponses</strong></div><div class="progress-track"><div class="progress-bar" style="width:${(completed / totalQuestions()) * 100}%"></div></div></div>
     <p class="eyebrow">Bonjour ${escapeHTML(state.student || "élève")} !</p><h2>Choisis une séquence</h2><p class="instruction">Tu peux les faire dans l’ordre que tu veux. Lis bien chaque consigne avant de répondre.</p>
-    <div class="sequence-grid">${sequences.map(sequence => `<button class="sequence-card" type="button" data-sequence="${sequence.id}"><span class="sequence-number">${sequence.number}</span><h3>${sequence.title}</h3><p>${sequence.description}</p><small>${sequence.questions.length} questions</small></button>`).join("")}</div>
+    <div class="sequence-grid">${sequences.map(sequence => `<button class="sequence-card" type="button" data-sequence="${sequence.id}"><span class="sequence-number">${sequence.number}</span><h3>${sequence.title}</h3><p>${sequence.description}</p><small>${sequence.questions.length} questions · ${sequence.durationLabel}</small></button>`).join("")}</div>
     ${completed ? `<div class="button-row">${button("Voir mon bilan", "results", "secondary-button")}</div>` : ""}
   </section>`;
 }
 
 function renderQuestion() {
-  const sequence = currentSequence(); const question = currentQuestion(); const sequencePosition = sequence.questions.indexOf(allQuestionIds()[answeredCount()]) + 1;
+  const sequence = currentSequence(); const question = currentQuestion();
+  if (!state.timerEndAt) { state.timerEndAt = Date.now() + sequence.durationSeconds * 1000; saveState(); }
+  if (state.timerEndAt <= Date.now()) { finishSequence("timeout"); return; }
   const savedAnswer = state.answers[sequence.questions[state.questionIndex]];
   const progress = ((state.questionIndex) / sequence.questions.length) * 100;
   screen.innerHTML = `<div class="progress-wrap"><div class="progress-meta"><span>${sequence.title}</span><strong>Question ${state.questionIndex + 1} sur ${sequence.questions.length}</strong></div><div class="progress-track"><div class="progress-bar" style="width:${progress}%"></div></div></div>
-    <div class="question-layout"><article class="panel"><p class="eyebrow">${sequence.title}</p><h2>${question.title}</h2><p class="instruction">${question.prompt}</p>
+    <div class="question-layout"><article class="panel"><p class="eyebrow">${sequence.title}</p><div id="timer-badge" class="timer-badge" aria-live="polite">Temps restant : ${formatTime(Math.max(0, Math.ceil((state.timerEndAt - Date.now()) / 1000)))}</div><h2>${question.title}</h2><p class="instruction">${question.prompt}</p>
       ${sequence.id === "lecture" ? `<details open><summary>Relire l’extrait</summary><div class="source-text">${storyExcerpt.replace(/\n\n/g, "<br><br>")}</div></details>` : ""}
       <form id="answer-form" class="option-list">${question.options.map((option, index) => `<label class="option"><input type="radio" name="answer" value="${index}" ${Number(savedAnswer) === index ? "checked" : ""}><span>${option}</span></label>`).join("")}</form>
       <div class="button-row">${state.questionIndex > 0 ? button("Question précédente", "previous", "secondary-button") : ""}${button(state.questionIndex === sequence.questions.length - 1 ? "Terminer la séquence" : "Valider et continuer", "next")}</div>
     </article><aside class="question-side"><h3>Petit rappel</h3><p>Il n’y a pas de piège. Prends le temps de lire et choisis la réponse qui te semble la plus juste.</p><p>Tu peux revenir à la question précédente avant de terminer la séquence.</p></aside></div>`;
+  timerInterval = setInterval(updateTimer, 1000);
 }
 
 function renderResults() {
@@ -155,7 +182,7 @@ function showToast(message) { const toast = document.createElement("div"); toast
 
 screen.addEventListener("click", event => {
   const sequenceButton = event.target.closest("[data-sequence]");
-  if (sequenceButton) { setState({ screen: "question", sequenceId: sequenceButton.dataset.sequence, questionIndex: 0 }); return; }
+  if (sequenceButton) { setState({ screen: "question", sequenceId: sequenceButton.dataset.sequence, questionIndex: 0, timerEndAt: null }); return; }
   const actionButton = event.target.closest("[data-action]"); if (!actionButton) return;
   const action = actionButton.dataset.action;
   if (action === "start") setState({ screen: "student" });
@@ -163,7 +190,7 @@ screen.addEventListener("click", event => {
   if (action === "save-student") { const name = document.querySelector("#student-name").value.trim(); if (!name) { showToast("Écris ton prénom pour continuer."); return; } setState({ student: name, screen: "sequences" }); }
   if (action === "sequences") setState({ screen: "sequences" });
   if (action === "previous") setState({ questionIndex: Math.max(0, state.questionIndex - 1) });
-  if (action === "next") { const answer = readAnswer(); if (answer === undefined) { showToast("Choisis une réponse avant de continuer."); return; } const id = currentSequence().questions[state.questionIndex]; const answers = { ...state.answers, [id]: answer }; if (state.questionIndex < currentSequence().questions.length - 1) setState({ answers, questionIndex: state.questionIndex + 1 }); else setState({ answers, screen: "sequences", sequenceId: null, questionIndex: 0 }); }
+  if (action === "next") { const answer = readAnswer(); if (answer === undefined) { showToast("Choisis une réponse avant de continuer."); return; } const id = currentSequence().questions[state.questionIndex]; const answers = { ...state.answers, [id]: answer }; if (state.questionIndex < currentSequence().questions.length - 1) setState({ answers, questionIndex: state.questionIndex + 1 }); else { state = { ...state, answers, screen: "sequences", sequenceId: null, questionIndex: 0, timerEndAt: null }; saveState(); render(); } }
   if (action === "results") setState({ screen: "results" });
   if (action === "restart") { state = { ...defaultState, student: state.student }; saveState(); render(); }
 });

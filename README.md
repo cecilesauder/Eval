@@ -18,6 +18,7 @@ L'application fonctionne côté navigateur, sans compte et sans serveur. Les ré
 - questions à choix adaptées à une interaction tactile ;
 - bilan final par séquence ;
 - reprise locale d'une session interrompue ;
+- durée officielle affichée et décomptée pour chaque exercice du prototype : 39 min, 1 min 20 et 1 min 30 ;
 - bouton de remise à zéro de la session.
 
 Les contenus de la démonstration sont repris du livret élève CM2 fourni dans le projet (`26CM2E`). Le guide professeur (`26CM2P`) est conservé dans l'espace de travail pour guider l'intégration des exercices suivants et des consignes de passation.
