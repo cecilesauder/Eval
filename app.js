@@ -59,7 +59,7 @@ const questions = {
 Object.assign(questions, {
   "ex02-1": { type: "input", title: "Nombre 1", prompt: "Écris en chiffres le nombre dicté : cinq mille sept cents.", answer: "5700", placeholder: "Ex. 5700", inputMode: "numeric" },
   "ex03-1": { type: "choice", title: "Problème 1", prompt: "Le livre de Fatou a 330 pages et celui de Simon 280 pages. Combien de pages le livre de Fatou a-t-il de plus ?", options: ["50", "610", "100", "30"], answer: 0 },
-  "ex04-1": { type: "input", title: "Droite graduée", prompt: "Écris dans le cadre le nombre indiqué par la flèche.", answer: null, placeholder: "Saisis le nombre", inputMode: "numeric", helper: "Dans le livret complet, la droite graduée est affichée à côté du champ." },
+  "ex04-1": { type: "input", title: "Droite 1", prompt: "Écris dans le cadre le nombre indiqué par la flèche.", answer: "58000", placeholder: "Saisis le nombre", inputMode: "numeric", numberLine: { min: 28000, max: 68000, minLabel: "28 000", maxLabel: "68 000", divisions: 4, targetIndex: 3 } },
   "ex05-1": { type: "choice", title: "Question 1", prompt: "3 dizaines + 4 centaines + 5 milliers + 8 unités =", options: ["5 348", "3 458", "5 438", "50 438"], answer: 0 },
   "ex05-2": { type: "choice", title: "Question 2", prompt: "6 milliers + 4 dizaines + 5 unités =", options: ["645", "15", "6 045", "6 450"], answer: 2 },
   "ex06-1": { type: "input", title: "Opération 1", prompt: "Pose et calcule : 672 + 9 816 =", answer: "10488", placeholder: "Résultat", inputMode: "numeric" },
@@ -115,7 +115,19 @@ Object.assign(questions, {
 // adulte et peut réécouter uniquement l'élément en cours.
 dictationNumbers.forEach((spoken, index) => { const id = `ex02-${index + 1}`; questions[id] = { type: "input", title: `Nombre ${index + 1} sur ${dictationNumbers.length}`, prompt: "Écoute le nombre puis écris-le en chiffres.", answer: spoken.replace(/\s/g, ""), placeholder: "Écris le nombre", inputMode: "numeric", speakText: spoken }; });
 dictationWords.forEach((word, index) => { const id = `ex09-${index + 1}`; questions[id] = { type: "input", title: `Mot ${index + 1} sur ${dictationWords.length}`, prompt: "Écoute le mot puis écris-le. Tu peux relancer la lecture autant de fois que nécessaire.", answer: word.replace(/^(un|une) /, ""), placeholder: "Écris le mot", inputMode: "text", speakText: word }; });
+const numberLines = [
+  { min: 28000, max: 68000, minLabel: "28 000", maxLabel: "68 000", divisions: 4, targetIndex: 3, answer: "58000" },
+  { min: 0, max: 20000, minLabel: "0", maxLabel: "20 000", divisions: 2, targetIndex: 1, answer: "10000" },
+  { min: 2050, max: 6050, minLabel: "2 050", maxLabel: "6 050", divisions: 4, targetIndex: 3, answer: "5050" },
+  { min: 9800, max: 10200, minLabel: "9 800", maxLabel: "10 200", divisions: 4, targetIndex: 3, answer: "10100" },
+  { min: 0, max: 600000, minLabel: "0", maxLabel: "600 000", divisions: 6, targetIndex: 4, answer: "400000" },
+  { min: 38900, max: 39100, minLabel: "38 900", maxLabel: "39 100", divisions: 2, targetIndex: 1, answer: "39000" }
+];
+numberLines.forEach((line, index) => {
+  questions[`ex04-${index + 1}`] = { type: "input", title: `Droite ${index + 1} sur ${numberLines.length}`, prompt: "Écris dans le cadre le nombre indiqué par la flèche.", answer: line.answer, placeholder: "Saisis le nombre", inputMode: "numeric", numberLine: line };
+});
 exerciseQuestionMap[2] = dictationNumbers.map((_, index) => `ex02-${index + 1}`);
+exerciseQuestionMap[4] = numberLines.map((_, index) => `ex04-${index + 1}`);
 exerciseQuestionMap[9] = dictationWords.map((_, index) => `ex09-${index + 1}`);
 exercises.forEach(exercise => { if (exerciseQuestionMap[exercise.number]) exercise.questionIds = exerciseQuestionMap[exercise.number]; });
 
@@ -147,11 +159,12 @@ function updateTimer() { const badge = document.querySelector("#timer-badge"); i
 function render() { stopTimer(); resetButton.hidden = state.screen === "home"; scoresButton.hidden = !state.student; if (state.screen === "home") renderHome(); if (state.screen === "student") renderStudent(); if (state.screen === "sequences") renderSequences(); if (state.screen === "question") renderQuestion(); if (state.screen === "fluency") renderFluency(); if (state.screen === "fluency-result") renderFluencyResult(); if (state.screen === "intro") renderExerciseIntro(); if (state.screen === "results") renderResults(); if (state.screen === "scores") renderScores(); }
 
 function renderHome() { screen.innerHTML = `<section class="hero"><div><p class="eyebrow">Prototype tablette • CM2 2026</p><h1>Les évaluations, autrement.</h1><p class="lead">Un parcours calme et guidé pour répondre aux exercices de français et de mathématiques sur tablette.</p><div class="button-row">${button("Commencer une évaluation", "start")}${state.student ? button("Reprendre la session", "resume", "secondary-button") : ""}</div></div></section>`; }
-function renderStudent() { screen.innerHTML = `<section class="panel narrow"><p class="eyebrow">Avant de commencer</p><h2>Qui passe l’évaluation ?</h2><p>Cette information reste uniquement sur cette tablette. Elle permet de reprendre la session si elle est interrompue.</p><label class="field-label" for="student-name">Prénom de l’élève</label><input id="student-name" class="text-input" type="text" autocomplete="off" value="${escapeHTML(state.student)}" placeholder="Ex. Camille"><div class="button-row">${button("Continuer", "save-student")}</div></section>`; document.querySelector("#student-name").focus(); }
+function renderStudent() { screen.innerHTML = `<section class="panel narrow"><p class="eyebrow">Avant de commencer</p><h2>Qui passe l’évaluation ?</h2><p>Cette information reste uniquement sur cette tablette. Elle permet de reprendre la session si elle est interrompue.</p><label class="field-label" for="student-name">Prénom de l’élève</label><input id="student-name" class="text-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" data-form-type="other" value="${escapeHTML(state.student)}" placeholder="Ex. Camille"><div class="button-row">${button("Continuer", "save-student")}</div></section>`; document.querySelector("#student-name").focus(); }
 function renderSequences() {
   const completed = answeredCount();
-  const groups = ["Français", "Mathématiques"].map(group => `<div class="exercise-group"><p class="eyebrow">${group}</p><div class="sequence-grid">${exercises.filter(exercise => exercise.sequence === group).map(exercise => `<button class="sequence-card" type="button" data-sequence="${exercise.id}"><span class="sequence-number">${String(exercise.number).padStart(2, "0")}</span><h3>Exercice ${exercise.number} · ${exercise.title}</h3><p>${exercise.activity}</p><small>${exercise.questionIds.length ? `${exercise.questionIds.length} questions interactives` : "Fiche de passation"} · ${exercise.durationLabel}</small></button>`).join("")}</div></div>`).join("");
-  screen.innerHTML = `<section><div class="progress-wrap"><div class="progress-meta"><span>Progression des questions interactives</span><strong>${completed}/${totalQuestions()} réponses</strong></div><div class="progress-track"><div class="progress-bar" style="width:${(completed / totalQuestions()) * 100}%"></div></div></div><p class="eyebrow">Bonjour ${escapeHTML(state.student || "élève")} !</p><h2>Choisis un exercice</h2><p class="instruction">Les durées affichées sont celles du guide professeur. Chaque carte ouvre une activité adaptée au type de l’exercice.</p>${groups}${completed ? `<div class="button-row">${button("Voir mon bilan", "results", "secondary-button")}</div>` : ""}</section>`;
+  const orderedExercises = [...exercises].sort((a, b) => a.number - b.number);
+  const cards = orderedExercises.map(exercise => `<button class="sequence-card" type="button" data-sequence="${exercise.id}"><span class="sequence-number">${String(exercise.number).padStart(2, "0")}</span><h3>Exercice ${exercise.number} · ${exercise.title}</h3><p>${exercise.activity}</p><small>${exercise.questionIds.length ? `${exercise.questionIds.length} questions interactives` : "Fiche de passation"} · ${exercise.durationLabel}</small></button>`).join("");
+  screen.innerHTML = `<section><div class="progress-wrap"><div class="progress-meta"><span>Progression des questions interactives</span><strong>${completed}/${totalQuestions()} réponses</strong></div><div class="progress-track"><div class="progress-bar" style="width:${(completed / totalQuestions()) * 100}%"></div></div></div><p class="eyebrow">Bonjour ${escapeHTML(state.student || "élève")} !</p><h2>Choisis un exercice</h2><p class="instruction">Les exercices sont présentés dans l’ordre du livret. Les durées affichées sont celles du guide professeur.</p><div class="sequence-grid">${cards}</div>${completed ? `<div class="button-row">${button("Voir mon bilan", "results", "secondary-button")}</div>` : ""}</section>`;
 }
 function renderExerciseIntro() {
   const exercise = currentSequence();
@@ -160,14 +173,25 @@ function renderExerciseIntro() {
   screen.innerHTML = `<section class="panel narrow"><p class="eyebrow">${exercise.sequence} · Exercice ${exercise.number}</p><div id="timer-badge" class="timer-badge">Temps restant : ${formatTime(Math.max(0, Math.ceil((state.timerEndAt - Date.now()) / 1000)))}</div><h2>${exercise.title}</h2><p class="lead">${exercise.activity}</p><p>La durée officielle de cet exercice est de <strong>${exercise.durationLabel}</strong>. La version interactive détaillée de cet exercice sera ajoutée à cette fiche sans modifier le temps prévu.</p><div class="button-row">${button("Terminer l’exercice", "complete-preview")}</div></section>`;
   timerInterval = setInterval(updateTimer, 1000);
 }
+function renderNumberLine(line) {
+  const left = 8;
+  const right = 92;
+  const ticks = Array.from({ length: line.divisions + 1 }, (_, index) => {
+    const x = left + ((right - left) * index / line.divisions);
+    const isTarget = index === line.targetIndex;
+    return `<line x1="${x}" y1="45" x2="${x}" y2="${isTarget ? 30 : 58}" class="number-line-tick" />${isTarget ? `<path d="M ${x - 1.5} 27 L ${x + 1.5} 27 L ${x} 33 Z" class="number-line-arrow" />` : ""}`;
+  }).join("");
+  return `<div class="number-line-wrap" aria-label="Demi-droite graduée de ${line.minLabel} à ${line.maxLabel}"><svg class="number-line" viewBox="0 0 100 72" role="img" aria-hidden="true"><line x1="${left}" y1="45" x2="${right}" y2="45" class="number-line-base" />${ticks}<text x="${left}" y="68" text-anchor="middle">${line.minLabel}</text><text x="${right}" y="68" text-anchor="middle">${line.maxLabel}</text></svg><p class="number-line-caption">La flèche indique une graduation entre ${line.minLabel} et ${line.maxLabel}.</p></div>`;
+}
 function renderAnswerControl(question, savedAnswer) {
   const audioButton = question.audioText ? `<button type="button" class="secondary-button speak-button" data-speak="${encodeURIComponent(question.audioText)}">Écouter le texte</button><details><summary>Afficher le texte</summary><div class="source-text reading-text">${question.audioText}</div></details>` : "";
-  if (question.type === "choice") return `${audioButton}<form id="answer-form" class="option-list">${question.options.map((option, index) => `<label class="option"><input type="radio" name="answer" value="${index}" ${Number(savedAnswer) === index ? "checked" : ""}><span>${option}</span></label>`).join("")}</form>`;
+  if (question.type === "choice") return `${audioButton}<form id="answer-form" class="option-list">${question.options.map((option, index) => `<label class="option"><input type="radio" name="answer" value="${index}" autocomplete="off" ${Number(savedAnswer) === index ? "checked" : ""}><span>${option}</span></label>`).join("")}</form>`;
   const value = savedAnswer === undefined ? "" : escapeHTML(savedAnswer);
   const helper = question.helper ? `<p class="instruction">${question.helper}</p>` : "";
   const passage = question.passage ? `<div class="source-text reading-text">${question.passage}</div>` : "";
   const speakButton = question.speakText ? `<button type="button" class="secondary-button speak-button" data-speak="${encodeURIComponent(question.speakText)}">Lire le mot</button>` : "";
-  return `${passage}${audioButton}${speakButton}${helper}<form id="answer-form"><label class="field-label" for="free-answer">Ta réponse</label><input id="free-answer" class="text-input" name="answer" type="text" inputmode="${question.inputMode || "text"}" value="${value}" placeholder="${question.placeholder || "Écris ta réponse"}"></form>`;
+  const numberLine = question.numberLine ? renderNumberLine(question.numberLine) : "";
+  return `${passage}${audioButton}${speakButton}${numberLine}${helper}<form id="answer-form"><label class="field-label" for="free-answer">Ta réponse</label><input id="free-answer" class="text-input" name="answer" type="text" inputmode="${question.inputMode || "text"}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" data-form-type="other" value="${value}" placeholder="${question.placeholder || "Écris ta réponse"}"></form>`;
 }
 function renderQuestion() {
   const exercise = currentSequence(); const question = currentQuestion();

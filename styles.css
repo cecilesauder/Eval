@@ -78,6 +78,13 @@ p { line-height: 1.65; }
 .reading-text { white-space: pre-line; max-height: 460px; margin: 16px 0; }
 .speak-button { margin: 10px 0; }
 .instruction { color: var(--muted); margin-top: -4px; }
+.number-line-wrap { margin: 22px 0 8px; padding: 14px 12px 8px; border: 2px solid var(--line); border-radius: 16px; background: #fff; }
+.number-line { display: block; width: 100%; min-height: 150px; overflow: visible; color: var(--navy); }
+.number-line-base, .number-line-tick { stroke: var(--navy); stroke-width: 1.1; vector-effect: non-scaling-stroke; }
+.number-line-tick { stroke-width: 1.5; }
+.number-line-arrow { fill: var(--coral); }
+.number-line text { fill: var(--navy); font-size: 3.2px; font-family: "Trebuchet MS", "Segoe UI", sans-serif; font-weight: 700; }
+.number-line-caption { margin: 0; color: var(--muted); font-size: .85rem; text-align: center; }
 .option-list { display: grid; gap: 11px; margin-top: 22px; }
 .option { display: flex; align-items: center; gap: 14px; border: 2px solid var(--line); border-radius: 14px; padding: 14px 16px; min-height: 58px; background: white; transition: border .15s, background .15s; }
 .option:has(input:checked) { border-color: var(--teal); background: var(--teal-soft); }

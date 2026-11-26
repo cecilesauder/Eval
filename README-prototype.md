@@ -9,16 +9,18 @@ Ouvrir `index.html` dans un navigateur récent. Aucun serveur, compte, package o
 ## Parcours inclus
 
 - identification locale de l'élève ;
-- catalogue complet des 30 exercices répartis entre français et mathématiques ;
+- catalogue complet des 30 exercices affichés exactement dans l'ordre numérique du livret ;
 - une activité interactive pour chacun des 30 exercices ;
 - QCM, saisies numériques ou textuelles et réponses libres selon la nature de l'exercice ;
 - texte complet de lecture pour l'exercice 30, avec saisie du nombre de mots lus ;
 - texte complet de compréhension orale pour l'exercice 23, lisible autant de fois que nécessaire ;
 - douze boutons « Lire le mot » pour l'exercice 9 et lecture répétable des nombres dictés de l'exercice 2 via la synthèse vocale du navigateur ;
+- six demi-droites graduées fidèles à l'exercice 4 du livret, avec flèche, bornes et correction attendue ;
 - exercice 30 de fluence présenté phrase par phrase avec bouton « Continuer », calcul des mots par minute et score de chaque tentative ;
 - sortie et redémarrage disponibles depuis chaque exercice ;
 - bouton « Mes scores » avec historique local des tentatives et évolution de la fluence ;
 - réponses tactiles sous forme de QCM ;
+- champs de réponse configurés sans suggestions de clavier, autocorrection, capitalisation automatique ni correcteur orthographique ;
 - temps réglementaire affiché et décompté pour chaque exercice : 39 min (exercice 1), 1 min 20 (exercice 10) et 1 min 30 (exercice 19) ;
 - progression par séquence et bilan final ;
 - sauvegarde locale automatique via `localStorage` ;
