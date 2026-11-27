@@ -43,6 +43,17 @@ const exercises = [
   { id: "ex-30", number: 30, sequence: "Français", title: "Lire avec fluidité", activity: "Lire correctement le plus grand nombre de mots d'un texte en une minute.", durationSeconds: 60, durationLabel: "1 min", questionIds: [] }
 ];
 
+const sequenceDetails = {
+  1: { label: "Français" },
+  2: { label: "Mathématiques" },
+  3: { label: "Français" },
+  4: { label: "Mathématiques" },
+  5: { label: "Français" },
+  6: { label: "Français" }
+};
+const sequenceByExercise = { 1: 1, 2: 2, 3: 2, 4: 2, 5: 2, 6: 2, 7: 2, 8: 3, 9: 3, 10: 3, 11: 3, 12: 3, 13: 3, 14: 4, 15: 4, 16: 4, 17: 4, 18: 4, 19: 4, 20: 4, 21: 4, 22: 4, 23: 5, 24: 5, 25: 5, 26: 5, 27: 5, 28: 5, 29: 5, 30: 6 };
+exercises.forEach(exercise => { exercise.sequenceNumber = sequenceByExercise[exercise.number]; exercise.sequenceTitle = sequenceDetails[exercise.sequenceNumber].title; });
+
 const questions = {
   "lecture-1": { type: "choice", title: "Question 1", prompt: "Toshiro est « très fier » car...", options: ["il a fabriqué le cerf-volant avec son grand-père.", "le cerf-volant appartenait à son grand-père.", "son grand-père lui a acheté le cerf-volant.", "son grand-père a décoré lui-même le cerf-volant."], answer: 0 },
   "lecture-2": { type: "choice", title: "Question 2", prompt: "Toshiro est « très fier » car son cerf-volant est…", options: ["grand.", "léger.", "cher.", "coloré."], answer: 3 },
@@ -65,7 +76,12 @@ const questions = {
 // orale restent enregistrables sans correction automatique.
 Object.assign(questions, {
   "ex02-1": { type: "input", title: "Nombre 1", prompt: "Écris en chiffres le nombre dicté : cinq mille sept cents.", answer: "5700", placeholder: "Ex. 5700", inputMode: "numeric" },
-  "ex03-1": { type: "choice", title: "Problème 1", prompt: "Le livre de Fatou a 330 pages et celui de Simon 280 pages. Combien de pages le livre de Fatou a-t-il de plus ?", options: ["50", "610", "100", "30"], answer: 0 },
+  "ex03-1": { type: "choice", title: "Problème 1", prompt: "Le livre de Fatou a 330 pages. Le livre de Simon a 280 pages. Combien de pages le livre de Fatou a-t-il de plus que celui de Simon ?", options: ["100", "150", "330", "30", "50", "610"], answer: 4, research: true },
+  "ex03-2": { type: "choice", title: "Problème 2", prompt: "Une tablette de chocolat coûte 2,60 €. Léo a 8 € dans son porte-monnaie. Il décide d’acheter 3 tablettes de chocolat. Combien Léo va-t-il payer ? Parmi les opérations suivantes, une seule permet de trouver la bonne réponse. Laquelle ?", options: ["2,60 € + 8 €", "2,60 € × 8 €", "8 € + 3", "8 € × 3", "2,60 € × 3", "2,60 € + 3"], answer: 4, research: true },
+  "ex03-3": { type: "choice", title: "Problème 3", prompt: "Ali a 150 € dans son porte-monnaie. Ali achète 3 livres à 20 € l’un et 4 magazines à 10 € l’un. Combien d’argent a-t-il après son achat ?", options: ["60 €", "40 €", "100 €", "120 €", "113 €", "50 €"], answer: 5, research: true },
+  "ex03-4": { type: "choice", title: "Problème 4", prompt: "2 parts de gâteau coûtent 3 €. Combien 8 parts de gâteau coûtent-elles ?", options: ["9 €", "12 €", "24 €", "8 €", "11 €", "13 €"], answer: 1, research: true },
+  "ex03-5": { type: "choice", title: "Problème 5", prompt: "Une trousse et un stylo coûtent 14 €. Trois stylos coûtent 12 €. Quel est le prix d’une trousse ?", options: ["14 €", "4 €", "12 €", "2 €", "7 €", "10 €"], answer: 3, research: true },
+  "ex03-6": { type: "choice", title: "Problème 6", prompt: "Lis le programme de construction. Une seule figure correspond à ce programme de construction. Parmi les 4 figures proposées, entoure la figure correcte.", options: ["Figure 1", "Figure 2", "Figure 3", "Figure 4"], answer: 3, image: "assets/exercice-3-figures.png" },
   "ex04-1": { type: "input", title: "Droite 1", prompt: "Écris dans le cadre le nombre indiqué par la flèche.", answer: "58000", placeholder: "Saisis le nombre", inputMode: "numeric", numberLine: { min: 28000, max: 68000, minLabel: "28 000", maxLabel: "68 000", divisions: 4, targetIndex: 3 } },
   "ex05-1": { type: "choice", title: "Question 1", prompt: "3 dizaines + 4 centaines + 5 milliers + 8 unités =", options: ["5 348", "3 458", "5 438", "50 438"], answer: 0 },
   "ex05-2": { type: "choice", title: "Question 2", prompt: "6 milliers + 4 dizaines + 5 unités =", options: ["645", "15", "6 045", "6 450"], answer: 2 },
@@ -101,7 +117,7 @@ Object.assign(questions, {
 
 const exerciseQuestionMap = {
   1: ["lecture-1", "lecture-2", "lecture-3", "lecture-4", "lecture-5", "lecture-6", "lecture-7", "lecture-8", "lecture-9", "lecture-10"],
-  2: ["ex02-1"], 3: ["ex03-1"], 4: ["ex04-1"], 5: ["ex05-1", "ex05-2"], 6: ["ex06-1", "ex06-2"], 7: ["ex07-1"], 8: ["ex08-1", "ex08-2"], 9: ["ex09-1"], 11: ["ex11-1", "ex11-2"], 12: ["ex12-1", "ex12-2"], 13: ["ex13-1", "ex13-2"], 14: ["ex14-1"], 15: ["ex15-1"], 16: ["ex16-1"], 17: ["ex17-1"], 18: ["ex18-1"], 20: ["ex20-1"], 21: ["ex21-1"], 22: ["ex22-1"], 23: ["ex23-1"], 24: ["ex24-1"], 25: ["ex25-1"], 26: ["ex26-1"], 27: ["ex27-1"], 28: ["ex28-1"], 29: ["ex29-1"], 30: ["ex30-1"]
+  2: ["ex02-1"], 3: ["ex03-1", "ex03-2", "ex03-3", "ex03-4", "ex03-5", "ex03-6"], 4: ["ex04-1"], 5: ["ex05-1", "ex05-2"], 6: ["ex06-1", "ex06-2"], 7: ["ex07-1"], 8: ["ex08-1", "ex08-2"], 9: ["ex09-1"], 11: ["ex11-1", "ex11-2"], 12: ["ex12-1", "ex12-2"], 13: ["ex13-1", "ex13-2"], 14: ["ex14-1"], 15: ["ex15-1"], 16: ["ex16-1"], 17: ["ex17-1"], 18: ["ex18-1"], 20: ["ex20-1"], 21: ["ex21-1"], 22: ["ex22-1"], 23: ["ex23-1"], 24: ["ex24-1"], 25: ["ex25-1"], 26: ["ex26-1"], 27: ["ex27-1"], 28: ["ex28-1"], 29: ["ex29-1"], 30: ["ex30-1"]
 };
 exercises.forEach(exercise => { if (exerciseQuestionMap[exercise.number]) exercise.questionIds = exerciseQuestionMap[exercise.number]; });
 
@@ -190,8 +206,9 @@ const storyExcerpt = `Le cerf-volant de Toshiro
      - Oui !
 
 Le cerf-volant de Toshiro, Ghislaine Roman, éditions Nathan.`;
+function storyForDisplay() { return storyExcerpt.replace(/^\s*\d+\s+/gm, "").replace(/^ {5}/gm, ""); }
 
-const defaultState = { screen: "home", student: "", sequenceId: null, questionIndex: 0, answers: {}, timerEndAt: null, history: [], fluencySentenceIndex: 0, fluencyStartedAt: null, fluencyResult: null };
+const defaultState = { screen: "home", student: "", sequenceId: null, questionIndex: 0, answers: {}, research: {}, timerEndAt: null, history: [], fluencySentenceIndex: 0, fluencyStartedAt: null, fluencyResult: null };
 let state = loadState();
 const screen = document.querySelector("#screen");
 const resetButton = document.querySelector("#reset-button");
@@ -221,14 +238,18 @@ function renderStudent() { screen.innerHTML = `<section class="panel narrow"><p 
 function renderSequences() {
   const completed = answeredCount();
   const orderedExercises = [...exercises].sort((a, b) => a.number - b.number);
-  const cards = orderedExercises.map(exercise => `<button class="sequence-card" type="button" data-sequence="${exercise.id}"><span class="sequence-number">${String(exercise.number).padStart(2, "0")}</span><h3>Exercice ${exercise.number} · ${exercise.title}</h3><p>${exercise.activity}</p><small>${exercise.questionIds.length ? `${exercise.questionIds.length} questions interactives` : "Fiche de passation"} · ${exercise.durationLabel}</small></button>`).join("");
-  screen.innerHTML = `<section><div class="progress-wrap"><div class="progress-meta"><span>Progression des questions interactives</span><strong>${completed}/${totalQuestions()} réponses</strong></div><div class="progress-track"><div class="progress-bar" style="width:${(completed / totalQuestions()) * 100}%"></div></div></div><p class="eyebrow">Bonjour ${escapeHTML(state.student || "élève")} !</p><h2>Choisis un exercice</h2><p class="instruction">Les exercices sont présentés dans l’ordre du livret. Les durées affichées sont celles du guide professeur.</p><div class="sequence-grid">${cards}</div>${completed ? `<div class="button-row">${button("Voir mon bilan", "results", "secondary-button")}</div>` : ""}</section>`;
+  const groups = [...new Set(orderedExercises.map(exercise => exercise.sequenceNumber))].sort((a, b) => a - b).map(sequenceNumber => {
+    const details = sequenceDetails[sequenceNumber];
+    const cards = orderedExercises.filter(exercise => exercise.sequenceNumber === sequenceNumber).map(exercise => `<button class="sequence-card" type="button" data-sequence="${exercise.id}"><span class="sequence-number">${String(exercise.number).padStart(2, "0")}</span><h3>Exercice ${exercise.number} · ${exercise.title}</h3><p>${exercise.activity}</p><small>${exercise.questionIds.length ? `${exercise.questionIds.length} questions interactives` : "Fiche de passation"} · ${exercise.durationLabel}</small></button>`).join("");
+    return `<div class="exercise-group"><div class="sequence-heading"><p class="eyebrow">Séquence ${sequenceNumber} · ${details.label}</p></div><div class="sequence-grid">${cards}</div></div>`;
+  }).join("");
+  screen.innerHTML = `<section><div class="progress-wrap"><div class="progress-meta"><span>Progression des questions interactives</span><strong>${completed}/${totalQuestions()} réponses</strong></div><div class="progress-track"><div class="progress-bar" style="width:${(completed / totalQuestions()) * 100}%"></div></div></div><p class="eyebrow">Bonjour ${escapeHTML(state.student || "élève")} !</p><h2>Choisis ton exercice</h2><p class="instruction">Les exercices sont présentés dans l’ordre du livret et regroupés par séquence. Les durées affichées sont celles du guide professeur.</p>${groups}${completed ? `<div class="button-row">${button("Voir mon bilan", "results", "secondary-button")}</div>` : ""}</section>`;
 }
 function renderExerciseIntro() {
   const exercise = currentSequence();
   if (!state.timerEndAt) { state.timerEndAt = Date.now() + exercise.durationSeconds * 1000; saveState(); }
   if (state.timerEndAt <= Date.now()) { finishSequence("timeout"); return; }
-  screen.innerHTML = `<section class="panel narrow"><p class="eyebrow">${exercise.sequence} · Exercice ${exercise.number}</p><div id="timer-badge" class="timer-badge">Temps restant : ${formatTime(Math.max(0, Math.ceil((state.timerEndAt - Date.now()) / 1000)))}</div><h2>${exercise.title}</h2><p class="lead">${exercise.activity}</p><p>La durée officielle de cet exercice est de <strong>${exercise.durationLabel}</strong>. La version interactive détaillée de cet exercice sera ajoutée à cette fiche sans modifier le temps prévu.</p><div class="button-row">${button("Terminer l’exercice", "complete-preview")}</div></section>`;
+  screen.innerHTML = `<section class="panel narrow"><p class="eyebrow">Séquence ${exercise.sequenceNumber} · ${exercise.sequence} · Exercice ${exercise.number}</p><div id="timer-badge" class="timer-badge">Temps restant : ${formatTime(Math.max(0, Math.ceil((state.timerEndAt - Date.now()) / 1000)))}</div><h2>${exercise.title}</h2><p class="lead">${exercise.activity}</p><p>La durée officielle de cet exercice est de <strong>${exercise.durationLabel}</strong>. La version interactive détaillée de cet exercice sera ajoutée à cette fiche sans modifier le temps prévu.</p><div class="button-row">${button("Terminer l’exercice", "complete-preview")}</div></section>`;
   timerInterval = setInterval(updateTimer, 1000);
 }
 function renderNumberLine(line) {
@@ -241,22 +262,24 @@ function renderNumberLine(line) {
   }).join("");
   return `<div class="number-line-wrap" aria-label="Demi-droite graduée de ${line.minLabel} à ${line.maxLabel}"><svg class="number-line" viewBox="0 0 100 72" role="img" aria-hidden="true"><line x1="${left}" y1="45" x2="${right}" y2="45" class="number-line-base" />${ticks}<text x="${left}" y="68" text-anchor="middle">${line.minLabel}</text><text x="${right}" y="68" text-anchor="middle">${line.maxLabel}</text></svg><p class="number-line-caption">La flèche indique une graduation entre ${line.minLabel} et ${line.maxLabel}.</p></div>`;
 }
-function renderAnswerControl(question, savedAnswer) {
+function renderAnswerControl(question, savedAnswer, savedResearch = "") {
   const audioButton = question.audioText ? `<button type="button" class="secondary-button speak-button" data-speak="${encodeURIComponent(question.audioText)}">Écouter le texte</button><details><summary>Afficher le texte</summary><div class="source-text reading-text">${question.audioText}</div></details>` : "";
-  if (question.type === "choice") return `${audioButton}<form id="answer-form" class="option-list">${question.options.map((option, index) => `<label class="option"><input type="radio" name="answer" value="${index}" autocomplete="off" ${Number(savedAnswer) === index ? "checked" : ""}><span>${option}</span></label>`).join("")}</form>`;
+  const researchBox = question.research ? `<details class="research-box"><summary>Ouvrir le cadre pour faire tes recherches</summary><textarea id="research-answer" class="research-area" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="Écris ou pose tes calculs ici">${escapeHTML(savedResearch)}</textarea></details>` : "";
+  const image = question.image ? `<figure class="question-image"><img src="${question.image}" alt="Les quatre figures proposées dans le problème 6 de l’exercice 3"><figcaption>Les quatre figures proposées dans le livret.</figcaption></figure>` : "";
+  if (question.type === "choice") return `${image}${audioButton}${researchBox}<form id="answer-form" class="option-list">${question.options.map((option, index) => `<label class="option"><input type="radio" name="answer" value="${index}" autocomplete="off" ${Number(savedAnswer) === index ? "checked" : ""}><span>${option}</span></label>`).join("")}</form>`;
   const value = savedAnswer === undefined ? "" : escapeHTML(savedAnswer);
   const helper = question.helper ? `<p class="instruction">${question.helper}</p>` : "";
   const passage = question.passage ? `<div class="source-text reading-text">${question.passage}</div>` : "";
   const speakButton = question.speakText ? `<button type="button" class="secondary-button speak-button" data-speak="${encodeURIComponent(question.speakText)}">Lire le mot</button>` : "";
   const numberLine = question.numberLine ? renderNumberLine(question.numberLine) : "";
-  return `${passage}${audioButton}${speakButton}${numberLine}${helper}<form id="answer-form"><label class="field-label" for="free-answer">Ta réponse</label><input id="free-answer" class="text-input" name="answer" type="text" inputmode="${question.inputMode || "text"}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" data-form-type="other" value="${value}" placeholder="${question.placeholder || "Écris ta réponse"}"></form>`;
+  return `${passage}${audioButton}${speakButton}${numberLine}${helper}${researchBox}<form id="answer-form"><label class="field-label" for="free-answer">Ta réponse</label><input id="free-answer" class="text-input" name="answer" type="text" inputmode="${question.inputMode || "text"}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" data-form-type="other" value="${value}" placeholder="${question.placeholder || "Écris ta réponse"}"></form>`;
 }
 function renderQuestion() {
   const exercise = currentSequence(); const question = currentQuestion();
   if (!state.timerEndAt) { state.timerEndAt = Date.now() + exercise.durationSeconds * 1000; saveState(); }
   if (state.timerEndAt <= Date.now()) { finishSequence("timeout"); return; }
-  const savedAnswer = state.answers[exercise.questionIds[state.questionIndex]]; const progress = ((state.questionIndex) / exercise.questionIds.length) * 100;
-  screen.innerHTML = `<div class="progress-wrap"><div class="progress-meta"><span>Exercice ${exercise.number} · ${exercise.title}</span><strong>Question ${state.questionIndex + 1} sur ${exercise.questionIds.length}</strong></div><div class="progress-track"><div class="progress-bar" style="width:${progress}%"></div></div></div><div class="question-layout"><article class="panel"><p class="eyebrow">${exercise.sequence}</p><div id="timer-badge" class="timer-badge">Temps restant : ${formatTime(Math.max(0, Math.ceil((state.timerEndAt - Date.now()) / 1000)))}</div><h2>${question.title}</h2><p class="instruction">${question.prompt}</p>${exercise.id === "ex-01" ? `<details open><summary>Lire le texte intégral</summary><div class="source-text">${storyExcerpt.replace(/\n\n/g, "<br><br>")}</div></details>` : ""}${renderAnswerControl(question, savedAnswer)}<div class="button-row">${state.questionIndex > 0 ? button("Question précédente", "previous", "secondary-button") : ""}${button(state.questionIndex === exercise.questionIds.length - 1 ? "Terminer la séquence" : "Valider et continuer", "next")}${button("Quitter l’exercice", "exit-exercise", "secondary-button")}${button("Recommencer cet exercice", "restart-exercise", "secondary-button")}</div></article><aside class="question-side"><h3>Petit rappel</h3><p>Il n’y a pas de piège. Prends le temps de lire et choisis la réponse qui te semble la plus juste.</p><p>La durée réglementaire reste visible en haut de l’exercice.</p></aside></div>`;
+  const questionId = exercise.questionIds[state.questionIndex]; const savedAnswer = state.answers[questionId]; const savedResearch = state.research[questionId] || ""; const progress = ((state.questionIndex) / exercise.questionIds.length) * 100;
+  screen.innerHTML = `<div class="progress-wrap"><div class="progress-meta"><span>Exercice ${exercise.number} · ${exercise.title}</span><strong>Question ${state.questionIndex + 1} sur ${exercise.questionIds.length}</strong></div><div class="progress-track"><div class="progress-bar" style="width:${progress}%"></div></div></div><div class="question-layout"><article class="panel"><p class="eyebrow">${exercise.sequence}</p><div id="timer-badge" class="timer-badge">Temps restant : ${formatTime(Math.max(0, Math.ceil((state.timerEndAt - Date.now()) / 1000)))}</div><h2>${question.title}</h2><p class="instruction">${question.prompt}</p>${exercise.id === "ex-01" ? `<details open><summary>Lire le texte intégral</summary><div class="source-text">${storyForDisplay().replace(/\n\n/g, "<br><br>")}</div></details>` : ""}${renderAnswerControl(question, savedAnswer, savedResearch)}<div class="button-row">${state.questionIndex > 0 ? button("Question précédente", "previous", "secondary-button") : ""}${button(state.questionIndex === exercise.questionIds.length - 1 ? "Terminer la séquence" : "Valider et continuer", "next")}${button("Quitter l’exercice", "exit-exercise", "secondary-button")}${button("Recommencer cet exercice", "restart-exercise", "secondary-button")}</div></article><aside class="question-side"><h3>Petit rappel</h3><p>Il n’y a pas de piège. Prends le temps de lire et choisis la réponse qui te semble la plus juste.</p><p>La durée réglementaire reste visible en haut de l’exercice.</p></aside></div>`;
   timerInterval = setInterval(updateTimer, 1000);
 }
 const fluencySentences = mermaidPassage.match(/[^.!?]+[.!?]+/g) || [mermaidPassage];
@@ -277,6 +300,7 @@ function isCorrect(id) { const expected = questions[id].answer; return expected 
 function renderResults() { const ids = allQuestionIds(); const score = ids.reduce((total, id) => total + (isCorrect(id) ? 1 : 0), 0); const detailed = exercises.filter(exercise => exercise.questionIds.length).map(exercise => { const seqScore = exercise.questionIds.reduce((n, id) => n + (isCorrect(id) ? 1 : 0), 0); return `<div class="result-item"><span>Exercice ${exercise.number} · ${exercise.title}</span><strong>${seqScore}/${exercise.questionIds.length}</strong></div>`; }).join(""); screen.innerHTML = `<section class="panel narrow"><p class="eyebrow">Bilan de la session</p><h2>Bravo ${escapeHTML(state.student || "")}, tu as terminé le prototype.</h2><div class="result-score"><div class="score-circle">${score}/${ids.length}</div><p>Les réponses libres et les exercices nécessitant une lecture ou un visuel restent enregistrés pour validation par l’enseignant.</p></div><div class="result-list">${detailed}</div><div class="button-row">${button("Choisir un autre exercice", "sequences", "secondary-button")}${button("Mes scores et mon évolution", "scores", "secondary-button")}${button("Recommencer l’évaluation", "restart")}</div></section>`; }
 
 function readAnswer() { const selected = document.querySelector("input[name=answer]:checked"); if (selected) return Number(selected.value); const text = document.querySelector("#free-answer"); return text && text.value.trim() ? text.value.trim() : undefined; }
+function readResearch() { const research = document.querySelector("#research-answer"); return research ? research.value : ""; }
 function showToast(message) { const toast = document.createElement("div"); toast.className = "toast"; toast.textContent = message; document.body.append(toast); setTimeout(() => toast.remove(), 2400); }
 
 screen.addEventListener("click", event => {
@@ -303,8 +327,8 @@ screen.addEventListener("click", event => {
   if (action === "start-fluency") { state = { ...state, fluencyStartedAt: Date.now(), fluencySentenceIndex: 0 }; saveState(); render(); }
   if (action === "next-fluency") { if (state.fluencySentenceIndex >= fluencySentences.length - 1) finishFluency(); else { state = { ...state, fluencySentenceIndex: state.fluencySentenceIndex + 1 }; saveState(); render(); } }
   if (action === "exit-exercise") { stopTimer(); state = { ...state, screen: "sequences", sequenceId: null, questionIndex: 0, timerEndAt: null, fluencyStartedAt: null, fluencySentenceIndex: 0 }; saveState(); render(); }
-  if (action === "restart-exercise") { const exercise = currentSequence(); if (exercise) exercise.questionIds.forEach(id => delete state.answers[id]); state = { ...state, screen: state.sequenceId === "ex-30" ? "fluency" : "question", questionIndex: 0, timerEndAt: null, fluencySentenceIndex: 0, fluencyStartedAt: null, fluencyResult: null }; saveState(); render(); }
-  if (action === "next") { const answer = readAnswer(); if (answer === undefined) { showToast("Choisis une réponse avant de continuer."); return; } const id = currentSequence().questionIds[state.questionIndex]; const answers = { ...state.answers, [id]: answer }; if (state.questionIndex < currentSequence().questionIds.length - 1) setState({ answers, questionIndex: state.questionIndex + 1 }); else { state = { ...state, answers }; saveState(); finishSequence(); } }
+  if (action === "restart-exercise") { const exercise = currentSequence(); if (exercise) exercise.questionIds.forEach(id => { delete state.answers[id]; delete state.research[id]; }); state = { ...state, screen: state.sequenceId === "ex-30" ? "fluency" : "question", questionIndex: 0, timerEndAt: null, fluencySentenceIndex: 0, fluencyStartedAt: null, fluencyResult: null }; saveState(); render(); }
+  if (action === "next") { const answer = readAnswer(); if (answer === undefined) { showToast("Choisis une réponse avant de continuer."); return; } const id = currentSequence().questionIds[state.questionIndex]; const answers = { ...state.answers, [id]: answer }; const research = { ...state.research, [id]: readResearch() }; if (state.questionIndex < currentSequence().questionIds.length - 1) setState({ answers, research, questionIndex: state.questionIndex + 1 }); else { state = { ...state, answers, research }; saveState(); finishSequence(); } }
   if (action === "results") setState({ screen: "results" });
   if (action === "scores") setState({ screen: "scores" });
   if (action === "restart") { state = { ...defaultState, student: state.student }; saveState(); render(); }
