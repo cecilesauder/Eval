@@ -2,10 +2,10 @@
  * Éval CM2 — prototype local
  *
  * Les 30 exercices du livret sont décrits dans `exercises`, avec leur durée
- * officielle extraite du guide professeur 26CM2P. Les exercices 1, 10 et 19
- * possèdent déjà des questions interactives dans cette version ; les autres
- * disposent d'une fiche de passation chronométrée, prête à recevoir leurs
- * interactions détaillées lors de la prochaine intégration.
+ * officielle extraite du guide professeur 26CM2P. Les questions détaillées
+ * sont regroupées dans `questions` et reliées à leur exercice par
+ * `exerciseQuestionMap`, tandis que les visuels originaux sont servis depuis
+ * `assets/source-pages`.
  */
 
 const STORAGE_KEY = "eval-cm2-prototype-session-v1";
@@ -143,12 +143,69 @@ const mentalCalculations = [
   ["7 × 7 =", "49"], ["8 × 6 =", "48"], ["9 × 8 =", "72"], ["8 × 7 =", "56"], ["___ × 8 = 64", "8"]
 ];
 mentalCalculations.forEach(([prompt, answer], index) => { questions[`ex07-${index + 1}`] = { type: "input", title: `Calcul ${index + 1} sur ${mentalCalculations.length}`, prompt: `Complète : ${prompt}`, answer, placeholder: "Résultat", inputMode: "numeric" }; });
+const rapidCalculations = [
+  ["28 + 41 =", "69"], ["57 + 15 =", "72"], ["60 + 57 =", "117"], ["698 − 200 =", "498"], ["83 − 9 =", "74"], ["14 − 7 =", "7"], ["17 − 8 =", "9"], ["80 + ___ = 100", "20"], ["31 + 9 =", "40"], ["37 + 19 =", "56"], ["600 + ___ = 1 000", "400"], ["56 × 10 =", "560"], ["100 × 9 =", "900"], ["370 + ___ = 400", "30"], ["10 × 640 =", "6400"], ["100 × 58 =", "5800"], ["600 + 400 =", "1000"], ["41 + 19 =", "60"], ["35 + 9 =", "44"], ["25 + ___ = 100", "75"], ["18 + ___ = 100", "82"], ["113 + 99 =", "212"], ["28 + 49 =", "77"], ["310 + 199 =", "509"], ["480 : 10 =", "48"], ["25 × ___ = 100", "4"], ["50 × 3 =", "150"], ["460 : 2 =", "230"], ["90 × 20 =", "1800"], ["4 × 30 =", "120"]
+];
+rapidCalculations.forEach(([prompt, answer], index) => { questions[`ex22-${index + 1}`] = { type: "input", title: `Calcul ${index + 1} sur ${rapidCalculations.length}`, prompt: `Complète : ${prompt}`, answer, placeholder: "Résultat", inputMode: "numeric" }; });
 
 Object.assign(questions, {
   "ex02-1": { type: "input", title: "Nombre 1 sur 10", prompt: "Écoute le nombre puis écris-le en chiffres.", answer: "5700", placeholder: "Écris le nombre", inputMode: "numeric", speakText: "cinq mille sept cents" },
   "ex09-1": { type: "input", title: "Mot 1 sur 12", prompt: "Écoute le mot puis écris-le. Tu peux relancer la lecture autant de fois que nécessaire.", answer: "champignon", placeholder: "Écris le mot", inputMode: "text", speakText: "un champignon" },
   "ex23-1": { type: "choice", title: "Question 1", prompt: "L’étudiant va chaque jour au village voisin pour…", options: ["suivre un enseignement.", "parler avec le chien.", "rendre visite à ses parents.", "mener paître les buffles."], answer: 0, audioText: dogOfStoneText },
   "ex30-1": { type: "input", title: "Lecture fluide", prompt: "Lis le texte à voix haute pendant une minute, puis indique le nombre de mots correctement lus.", answer: null, placeholder: "Nombre de mots lus", inputMode: "numeric", passage: mermaidPassage, helper: "Le texte contient 204 mots. Le chronomètre de l’exercice dure une minute." }
+});
+
+const fraction = (numerator, denominator) => `<span class="fraction"><span>${numerator}</span><span>${denominator}</span></span>`;
+Object.assign(questions, {
+  "ex08-1": { type: "choice", title: "Question 1", prompt: "L’information sur le régime alimentaire du fou de Bassan se trouve dans l’encadré :", options: ["1. Sa carte d’identité", "2. Sa nourriture", "3. L’origine de son nom", "5. Le saviez-vous ?"], answer: 1, documentImage: "assets/source-pages/ex08-document-28.png" },
+  "ex08-2": { type: "choice", title: "Question 2", prompt: "Encadré 3. Le fou de Bassan mange les poissons…", options: ["dans son nid.", "sous l’eau.", "sur les falaises.", "en l’air."], answer: 1, documentImage: "assets/source-pages/ex08-document-28.png" },
+  "ex08-3": { type: "choice", title: "Question 3", prompt: "Le fou de Bassan a les yeux…", options: ["jaunes.", "blancs.", "bleus.", "noirs."], answer: 2, documentImage: "assets/source-pages/ex08-document-28.png" },
+  "ex08-4": { type: "choice", title: "Question 4", prompt: "Encadrés 1 et 6. « De 165 cm à 180 cm » correspond à…", options: ["la distance du bout d’une aile à une autre.", "la taille atteinte à l’âge adulte.", "la profondeur d’un nid dans une falaise.", "la taille maximale des poissons mangés."], answer: 0, documentImage: "assets/source-pages/ex08-document-28.png" },
+  "ex08-5": { type: "choice", title: "Question 5", prompt: "Le point commun entre le fou de Bassan et le Concorde est :", options: ["ils vont aussi vite", "ils ont la même silhouette", "ce sont des noms d’avion", "ce sont des oiseaux"], answer: 1, documentImage: "assets/source-pages/ex08-document-28.png" },
+  "ex08-6": { type: "choice", title: "Question 6", prompt: "On trouve la définition de certains mots dans l’encadré :", options: ["1", "2", "5", "6"], answer: 3, documentImage: "assets/source-pages/ex08-document-28.png" },
+  "ex08-7": { type: "choice", title: "Question 7", prompt: "Cette page donne des informations sur tous ces sujets, sauf un : lequel ?", options: ["La carte d’identité du fou de Bassan", "L’origine du nom du fou de Bassan", "L’apparence du fou de Bassan", "Les prédateurs du fou de Bassan"], answer: 3, documentImage: "assets/source-pages/ex08-document-28.png" },
+  "ex08-8": { type: "choice", title: "Question 8", prompt: "« Sa vitesse de vol : 90 km/h ». Cette information n’est pas dans le document mais on pourrait l’ajouter dans l’encadré :", options: ["1. Sa carte d’identité", "2. Sa nourriture", "3. L’origine de son nom", "4. Son apparence"], answer: 0, documentImage: "assets/source-pages/ex08-document-28.png" },
+  "ex08-9": { type: "choice", title: "Question 9", prompt: "Ce document a pour but…", options: ["de faire la publicité d’un avion.", "de donner du vocabulaire sur les oiseaux.", "de comparer différentes espèces d’oiseaux.", "d’informer sur une espèce d’oiseau."], answer: 3, documentImage: "assets/source-pages/ex08-document-28.png" },
+  "ex10-3": { type: "choice", title: "Question 3", prompt: "Trouve l’adjectif correctement accordé : la voiture…", options: ["présidentiel", "présidentielle", "présidentiels", "présidentielles"], answer: 1 },
+  "ex10-4": { type: "choice", title: "Question 4", prompt: "Trouve l’adjectif correctement accordé : les palais…", options: ["royal", "royales", "royale", "royaux"], answer: 3 },
+  "ex11-3": { type: "choice", title: "Question 3", prompt: "Trouve le nom correctement accordé : les grands…", options: ["fille", "acrobate", "garçons", "nageuses"], answer: 2 },
+  "ex11-4": { type: "choice", title: "Question 4", prompt: "Trouve le nom correctement accordé : les jolies…", options: ["décorations", "robe", "chaussons", "tableau"], answer: 0 },
+  "ex12-3": { type: "choice", title: "Question 3", prompt: "Mon cousin plaisantait avec ma sœur. Mes cousins…", options: ["plaisantaient avec ma sœur.", "plaisantiez avec ma sœur.", "plaisantais avec ma sœur.", "plaisantez avec ma sœur."], answer: 0 },
+  "ex12-4": { type: "choice", title: "Question 4", prompt: "Il aura sans doute raison. Ils…", options: ["aurons sans doute raison.", "aurait sans doute raison.", "ont sans doute raison.", "auront sans doute raison."], answer: 3 },
+  "ex13-3": { type: "input", title: "Question 3", prompt: "Je (tomber / passé composé) dans l’eau.", answer: ["suis tombé", "suis tombée"], placeholder: "Forme du verbe", inputMode: "text" },
+  "ex13-4": { type: "input", title: "Question 4", prompt: "Nous (manger / futur) très tôt ce soir.", answer: "mangerons", placeholder: "Forme du verbe", inputMode: "text" },
+  "ex14-1": { type: "choice", title: "Question 1", prompt: `Dans quelle situation a-t-on colorié en gris ${fraction(2, 3)} de la figure ?`, options: ["Figure 1", "Figure 2", "Figure 3", "Figure 4"], answer: 2, image: "assets/source-pages/ex14-17-42.png", imageAlt: "Figures de l’exercice 14, page 39 du livret" },
+  "ex14-2": { type: "choice", title: "Question 2", prompt: `Dans quelle situation a-t-on colorié en gris ${fraction(1, 4)} de la figure ?`, options: ["Figure 1", "Figure 2", "Figure 3", "Figure 4"], answer: 3, image: "assets/source-pages/ex14-17-42.png", imageAlt: "Figures de l’exercice 14, page 39 du livret" },
+  "ex15-1": { type: "choice", title: "Question 1", prompt: "Entoure le nombre correct pour « deux dixièmes ».", options: ["2,10", fraction(2, 10), "10,2", fraction(10, 2)], answer: 1, image: "assets/source-pages/ex14-17-43.png", imageAlt: "Écritures fractionnaires et décimales de l’exercice 15" },
+  "ex15-2": { type: "choice", title: "Question 2", prompt: "Entoure le nombre correct pour « quinze centièmes ».", options: [fraction(15, 100), fraction(10, 15), fraction(100, 15), fraction(15, 10)], answer: 0 },
+  "ex15-3": { type: "choice", title: "Question 3", prompt: "Entoure le nombre correct pour « deux dizaines, huit unités, un dixième et trois centièmes ».", options: ["2 813", "28,13", "328,1", "281,3"], answer: 1 },
+  "ex15-4": { type: "choice", title: "Question 4", prompt: "Entoure le nombre correct pour « six unités et sept centièmes ».", options: ["6,07", "6,7", "706", "67"], answer: 0 },
+  "ex16-1": { type: "input", title: "Droite 1", prompt: "Écris dans le cadre le nombre indiqué par la flèche.", answer: "1,8", placeholder: "Saisis le nombre", inputMode: "decimal", image: "assets/source-pages/ex14-17-44.png", imageAlt: "Droites graduées 1 à 3 de l’exercice 16" },
+  "ex16-2": { type: "input", title: "Droite 2", prompt: "Écris dans le cadre le nombre indiqué par la flèche.", answer: "1,7", placeholder: "Saisis le nombre", inputMode: "decimal", image: "assets/source-pages/ex14-17-44.png", imageAlt: "Droites graduées 1 à 3 de l’exercice 16" },
+  "ex16-3": { type: "input", title: "Droite 3", prompt: "Écris dans le cadre le nombre indiqué par la flèche.", answer: "10,4", placeholder: "Saisis le nombre", inputMode: "decimal", image: "assets/source-pages/ex14-17-44.png", imageAlt: "Droites graduées 1 à 3 de l’exercice 16" },
+  "ex16-4": { type: "input", title: "Droite 4", prompt: "Écris dans le cadre le nombre indiqué par la flèche.", answer: "0,5", placeholder: "Saisis le nombre", inputMode: "decimal", image: "assets/source-pages/ex14-17-45.png", imageAlt: "Droites graduées 4 et 5 de l’exercice 16" },
+  "ex16-5": { type: "input", title: "Droite 5", prompt: "Écris dans le cadre le nombre indiqué par la flèche.", answer: "8", placeholder: "Saisis le nombre", inputMode: "decimal", image: "assets/source-pages/ex14-17-45.png", imageAlt: "Droites graduées 4 et 5 de l’exercice 16" },
+  "ex17-1": { type: "choice", title: "Droite 1", prompt: "Parmi les propositions, entoure la fraction correcte indiquée par la flèche.", options: [fraction(1, 3), fraction(3, 1), fraction(3, 10), fraction(10, 3), fraction(11, 4), fraction(4, 11)], answer: 2, image: "assets/source-pages/ex14-17-46.png", imageAlt: "Les deux droites graduées de l’exercice 17" },
+  "ex17-2": { type: "choice", title: "Droite 2", prompt: "Parmi les propositions, entoure la fraction correcte indiquée par la flèche.", options: [fraction(1, 2), fraction(2, 1), fraction(1, 3), fraction(3, 1), fraction(1, 4), fraction(4, 1)], answer: 2, image: "assets/source-pages/ex14-17-46.png", imageAlt: "Les deux droites graduées de l’exercice 17" },
+  "ex18-7": { type: "choice", title: "Problème 7", prompt: "3 amis se partagent un sac de 150 billes. Chaque ami reçoit le même nombre de billes. Combien de billes ont-ils chacun ?", options: ["450", "147", "50", "153", "100", "75"], answer: 2, research: true },
+  "ex18-8": { type: "choice", title: "Problème 8", prompt: "Un professeur commande 3 boîtes de feutres. Dans chaque boîte, il y a 10 feutres. Chaque feutre coûte 5 €. Combien le professeur va-t-il payer ?", options: ["18 €", "65 €", "53 €", "35 €", "150 €", "30 €"], answer: 4, research: true },
+  "ex18-9": { type: "choice", title: "Problème 9", prompt: "Le train en provenance de Nantes doit arriver en gare à 14 h 20 min. Ce train aura un retard de 45 minutes. À quelle heure ce train va-t-il arriver ?", options: ["13 h 35 min", "14 h 20 min", "14 h 25 min", "14 h 65 min", "14 h 45 min", "15 h 05 min"], answer: 5, research: true },
+  "ex18-10": { type: "choice", title: "Problème 10", prompt: `Lucie a 300 perles dans son sac. ${fraction(1, 3)} des perles sont vertes. Les autres perles sont rouges. Combien de perles rouges Lucie a-t-elle dans son sac ?`, options: ["400", "100", "300", "200", "150", "900"], answer: 3, research: true, image: "assets/source-pages/ex18-probleme10-48.png", imageAlt: "Énoncé et choix du problème 10 de l’exercice 18" },
+  "ex18-11": { type: "choice", title: "Problème 11", prompt: "Sur ce diagramme, le lapin est l’animal représenté par la lettre…", options: ["A", "B", "C", "D", "E", "F"], answer: 3, image: "assets/source-pages/ex18-tableau-49.png", imageAlt: "Tableau et diagramme de l’exercice 18" },
+  "ex19-3": { type: "choice", title: "Question 3", prompt: "Trouve la fraction égale à 1.", options: [fraction(2, 3), fraction(3, 3), fraction(5, 3), fraction(8, 3)], answer: 1 },
+  "ex20-2": { type: "choice", title: "Comparaison 2", prompt: "Quel est le plus grand nombre : 2 ou 1,9 ?", options: ["2", "1,9"], answer: 0 },
+  "ex20-3": { type: "choice", title: "Comparaison 3", prompt: "Quel est le plus grand nombre : 5,3 ou 5,05 ?", options: ["5,3", "5,05"], answer: 0 },
+  "ex20-4": { type: "choice", title: "Comparaison 4", prompt: "Quel est le plus grand nombre : 4,6 ou 4,50 ?", options: ["4,6", "4,50"], answer: 0 },
+  "ex20-5": { type: "choice", title: "Comparaison 5", prompt: "Quel est le plus grand nombre : 3,23 ou 3,3 ?", options: ["3,23", "3,3"], answer: 1 },
+  "ex20-6": { type: "choice", title: "Comparaison 6", prompt: "Quel est le plus grand nombre : 4,15 ou 8,1 ?", options: ["4,15", "8,1"], answer: 1 },
+  "ex20-7": { type: "choice", title: "Comparaison 7", prompt: "Quel est le plus grand nombre : 38,19 ou 19,38 ?", options: ["38,19", "19,38"], answer: 0 },
+  "ex20-8": { type: "choice", title: "Comparaison 8", prompt: "Quel est le plus grand nombre : 15 ou 5,39 ?", options: ["15", "5,39"], answer: 0 },
+  "ex20-9": { type: "choice", title: "Comparaison 9", prompt: "Quel est le plus grand nombre : 7,19 ou 71,6 ?", options: ["7,19", "71,6"], answer: 1 },
+  "ex20-10": { type: "choice", title: "Comparaison 10", prompt: "Quel est le plus grand nombre : 16,18 ou 16,8 ?", options: ["16,18", "16,8"], answer: 1 },
+  "ex20-11": { type: "choice", title: "Comparaison 11", prompt: "Quel est le plus grand nombre : 7,99 ou 8,02 ?", options: ["7,99", "8,02"], answer: 1 },
+  "ex20-12": { type: "choice", title: "Comparaison 12", prompt: "Quel est le plus grand nombre : 0,39 ou 0,5 ?", options: ["0,39", "0,5"], answer: 1 },
+  "ex21-2": { type: "input", title: "Opération 2", prompt: "Pose et calcule : 418 × 23 =", answer: "9614", placeholder: "Résultat", inputMode: "numeric", research: true },
+  "ex21-3": { type: "input", title: "Opération 3", prompt: "Pose et calcule : 72 : 3 =", answer: "24", placeholder: "Résultat", inputMode: "numeric", research: true }
 });
 
 // Chaque mot et chaque nombre est un item distinct : l'élève avance sans
@@ -169,6 +226,20 @@ numberLines.forEach((line, index) => {
 exerciseQuestionMap[2] = dictationNumbers.map((_, index) => `ex02-${index + 1}`);
 exerciseQuestionMap[4] = numberLines.map((_, index) => `ex04-${index + 1}`);
 exerciseQuestionMap[9] = dictationWords.map((_, index) => `ex09-${index + 1}`);
+exerciseQuestionMap[8] = Array.from({ length: 9 }, (_, index) => `ex08-${index + 1}`);
+exerciseQuestionMap[10] = ["grammaire-1", "grammaire-2", "ex10-3", "ex10-4"];
+exerciseQuestionMap[11] = ["ex11-1", "ex11-2", "ex11-3", "ex11-4"];
+exerciseQuestionMap[12] = ["ex12-1", "ex12-2", "ex12-3", "ex12-4"];
+exerciseQuestionMap[13] = ["ex13-1", "ex13-2", "ex13-3", "ex13-4"];
+exerciseQuestionMap[14] = ["ex14-1", "ex14-2"];
+exerciseQuestionMap[15] = Array.from({ length: 4 }, (_, index) => `ex15-${index + 1}`);
+exerciseQuestionMap[16] = Array.from({ length: 5 }, (_, index) => `ex16-${index + 1}`);
+exerciseQuestionMap[17] = ["ex17-1", "ex17-2"];
+exerciseQuestionMap[18] = Array.from({ length: 5 }, (_, index) => `ex18-${index + 7}`);
+exerciseQuestionMap[19] = ["fractions-1", "fractions-2", "ex19-3"];
+exerciseQuestionMap[20] = Array.from({ length: 12 }, (_, index) => `ex20-${index + 1}`);
+exerciseQuestionMap[21] = ["ex21-1", "ex21-2", "ex21-3"];
+exerciseQuestionMap[22] = rapidCalculations.map((_, index) => `ex22-${index + 1}`);
 exercises.forEach(exercise => { if (exerciseQuestionMap[exercise.number]) exercise.questionIds = exerciseQuestionMap[exercise.number]; });
 
 const storyExcerpt = `Le cerf-volant de Toshiro
@@ -282,14 +353,15 @@ function renderNumberLine(line) {
 function renderAnswerControl(question, savedAnswer, savedResearch = "") {
   const audioButton = question.audioText ? `<button type="button" class="secondary-button speak-button" data-speak="${encodeURIComponent(question.audioText)}">Écouter le texte</button><details><summary>Afficher le texte</summary><div class="source-text reading-text">${question.audioText}</div></details>` : "";
   const researchBox = question.research ? `<details class="research-box"><summary>Ouvrir le cadre pour faire tes recherches</summary><textarea id="research-answer" class="research-area" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="Écris ou pose tes calculs ici">${escapeHTML(savedResearch)}</textarea></details>` : "";
-  const image = question.image ? `<figure class="question-image"><img src="${question.image}" alt="Les quatre figures proposées dans le problème 6 de l’exercice 3"><figcaption>Les quatre figures proposées dans le livret.</figcaption></figure>` : "";
-  if (question.type === "choice") return `${image}${audioButton}${researchBox}<form id="answer-form" class="option-list">${question.options.map((option, index) => `<label class="option"><input type="radio" name="answer" value="${index}" autocomplete="off" ${Number(savedAnswer) === index ? "checked" : ""}><span>${option}</span></label>`).join("")}</form>`;
+  const documentImage = question.documentImage ? `<details class="document-box"><summary>Ouvrir et fermer le document composite</summary><figure class="question-image"><img src="${question.documentImage}" alt="Document composite sur le fou de Bassan"><figcaption>Document composite du livret, disponible pendant toutes les questions de l’exercice 8.</figcaption></figure></details>` : "";
+  const image = question.image ? `<figure class="question-image"><img src="${question.image}" alt="${question.imageAlt || "Visuel du livret"}"><figcaption>Visuel extrait du livret.</figcaption></figure>` : "";
+  if (question.type === "choice") return `${documentImage}${image}${audioButton}${researchBox}<form id="answer-form" class="option-list">${question.options.map((option, index) => `<label class="option"><input type="radio" name="answer" value="${index}" autocomplete="off" ${Number(savedAnswer) === index ? "checked" : ""}><span>${option}</span></label>`).join("")}</form>`;
   const value = savedAnswer === undefined ? "" : escapeHTML(savedAnswer);
   const helper = question.helper ? `<p class="instruction">${question.helper}</p>` : "";
   const passage = question.passage ? `<div class="source-text reading-text">${question.passage}</div>` : "";
   const speakButton = question.speakText ? `<button type="button" class="secondary-button speak-button" data-speak="${encodeURIComponent(question.speakText)}">Lire le mot</button>` : "";
   const numberLine = question.numberLine ? renderNumberLine(question.numberLine) : "";
-  return `${passage}${audioButton}${speakButton}${numberLine}${helper}${researchBox}<form id="answer-form"><label class="field-label" for="free-answer">Ta réponse</label><input id="free-answer" class="text-input" name="answer" type="text" inputmode="${question.inputMode || "text"}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" data-form-type="other" value="${value}" placeholder="${question.placeholder || "Écris ta réponse"}"></form>`;
+  return `${documentImage}${image}${passage}${audioButton}${speakButton}${numberLine}${helper}${researchBox}<form id="answer-form"><label class="field-label" for="free-answer">Ta réponse</label><input id="free-answer" class="text-input" name="answer" type="text" inputmode="${question.inputMode || "text"}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" data-form-type="other" value="${value}" placeholder="${question.placeholder || "Écris ta réponse"}"></form>`;
 }
 function renderQuestion() {
   const exercise = currentSequence(); const question = currentQuestion();
@@ -315,7 +387,7 @@ function finishFluency() { stopTimer(); const elapsedSeconds = Math.max(1, (Date
 function renderFluencyResult() { const result = state.fluencyResult; screen.innerHTML = `<section class="panel narrow"><p class="eyebrow">Exercice 30 terminé</p><h2>Ton score de fluence</h2><div class="score-summary"><div class="score-stat">Mots correctement lus<strong>${result.words}</strong></div><div class="score-stat">Temps de lecture<strong>${formatTime(result.elapsedSeconds)}</strong></div><div class="score-stat">Mots par minute<strong>${result.wpm}</strong></div></div><p>Pour progresser, recommence l’exercice et essaie de lire avec précision, sans accélérer au point de faire des erreurs.</p><div class="button-row">${button("Recommencer l’exercice", "restart-exercise")}${button("Voir mes scores", "scores", "secondary-button")}${button("Retour aux exercices", "sequences", "secondary-button")}</div></section>`; }
 function renderScores() { const attempts = [...state.history].reverse(); const grouped = exercises.map(exercise => ({ exercise, attempts: state.history.filter(item => item.exerciseNumber === exercise.number) })).filter(item => item.attempts.length); const fluency = state.history.filter(item => item.exerciseNumber === 30 && item.metric === "mots/min"); const bestFluency = fluency.length ? Math.max(...fluency.map(item => item.score)) : 0; const bars = fluency.slice(-12).map((item, index) => `<div class="evolution-bar" style="height:${Math.max(12, Math.min(100, item.score / 2))}%"><span>${item.score}</span><small>${index + 1}</small></div>`).join(""); const rows = attempts.slice(0, 20).map(item => `<div class="result-item"><span>Exercice ${item.exerciseNumber} · ${item.title}<br><small>${new Date(item.completedAt).toLocaleString("fr-FR")}</small></span><strong>${item.metric === "mots/min" ? `${item.score} mots/min` : `${item.score}/${item.maximum}`}</strong></div>`).join(""); screen.innerHTML = `<section class="panel narrow"><p class="eyebrow">Entraînement personnel</p><h2>Mes scores et mon évolution</h2><div class="score-summary"><div class="score-stat">Tentatives<strong>${state.history.length}</strong></div><div class="score-stat">Exercices travaillés<strong>${grouped.length}/30</strong></div><div class="score-stat">Record de fluence<strong>${bestFluency ? `${bestFluency} mots/min` : "—"}</strong></div></div>${fluency.length ? `<h3>Évolution de la fluence</h3><div class="evolution">${bars}</div>` : `<p>Termine l’exercice 30 pour voir ton évolution de fluence ici.</p>`}<h3>Historique récent</h3><div class="result-list">${rows || "<p>Aucun score enregistré pour le moment.</p>"}</div><div class="button-row">${button("Retour aux exercices", "sequences", "secondary-button")}</div></section>`; }
 function normalized(value) { return String(value ?? "").trim().toLocaleLowerCase("fr-FR").replace(/\s+/g, " "); }
-function isCorrect(id) { const expected = questions[id].answer; return expected !== null && normalized(state.answers[id]) === normalized(expected); }
+function isCorrect(id) { const expected = questions[id].answer; if (expected === null) return false; return (Array.isArray(expected) ? expected : [expected]).some(value => normalized(state.answers[id]) === normalized(value)); }
 function renderResults() { const ids = allQuestionIds(); const score = ids.reduce((total, id) => total + (isCorrect(id) ? 1 : 0), 0); const detailed = exercises.filter(exercise => exercise.questionIds.length).map(exercise => { const seqScore = exercise.questionIds.reduce((n, id) => n + (isCorrect(id) ? 1 : 0), 0); return `<div class="result-item"><span>Exercice ${exercise.number} · ${exercise.title}</span><strong>${seqScore}/${exercise.questionIds.length}</strong></div>`; }).join(""); screen.innerHTML = `<section class="panel narrow"><p class="eyebrow">Bilan de la session</p><h2>Bravo ${escapeHTML(state.student || "")}, tu as terminé le prototype.</h2><div class="result-score"><div class="score-circle">${score}/${ids.length}</div><p>Les réponses libres et les exercices nécessitant une lecture ou un visuel restent enregistrés pour validation par l’enseignant.</p></div><div class="result-list">${detailed}</div><div class="button-row">${button("Choisir un autre exercice", "sequences", "secondary-button")}${button("Mes scores et mon évolution", "scores", "secondary-button")}${button("Recommencer l’évaluation", "restart")}</div></section>`; }
 
 function readAnswer() { const selected = document.querySelector("input[name=answer]:checked"); if (selected) return Number(selected.value); const text = document.querySelector("#free-answer"); return text && text.value.trim() ? text.value.trim() : undefined; }

@@ -17,6 +17,13 @@ Ouvrir `index.html` dans un navigateur récent. Aucun serveur, compte, package o
 - exercice 5 repris avec ses 8 questions de décomposition additive ;
 - exercice 6 repris avec ses 4 opérations, chacune accompagnée d'un cadre pour poser le calcul ;
 - exercice 7 repris avec ses 25 calculs à trous de tables de multiplication et son chronomètre d'une minute ;
+- exercice 8 repris avec ses 9 questions sur le document composite « Le fou de Bassan », qui peut être ouvert et refermé pendant toute la série ;
+- exercices 10, 11, 12 et 13 complétés avec leurs 4 questions respectives ;
+- exercices 14 et 15 complétés avec leurs questions et leurs figures/écritures originales, notamment les fractions avec barre horizontale ;
+- exercice 16 repris avec ses 5 droites graduées, et exercice 17 avec ses 2 droites graduées et ses propositions de fractions ;
+- exercice 18 repris avec les problèmes 7 à 11, un cadre de recherche par problème et le tableau/diagramme original du problème 11 ;
+- exercices 19, 20 et 21 complétés respectivement avec 3 questions, 12 comparaisons et 3 calculs posés ;
+- exercice 22 repris avec les 30 calculs de rapidité à effectuer en 3 minutes, sans les poser ;
 - QCM, saisies numériques ou textuelles et réponses libres selon la nature de l'exercice ;
 - texte complet de lecture pour l'exercice 30, avec saisie du nombre de mots lus ;
 - texte complet de compréhension orale pour l'exercice 23, lisible autant de fois que nécessaire ;
@@ -46,8 +53,6 @@ Le chronomètre démarre au lancement d'un exercice, reste actif entre ses quest
 
 ## Prochaines étapes possibles
 
-1. intégrer chaque exercice du livret avec son type d'interaction réel ;
-2. distinguer le mode élève et le mode enseignant ;
-3. ajouter les consignes de passation et les durées du guide professeur ;
-4. produire une restitution exportable par élève et par compétence ;
-5. ajouter des tests d'accessibilité et une gestion plus fine des réponses non renseignées.
+1. distinguer le mode élève et le mode enseignant ;
+2. produire une restitution exportable par élève et par compétence ;
+3. ajouter des tests d'accessibilité et une gestion plus fine des réponses non renseignées.

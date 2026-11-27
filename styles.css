@@ -87,6 +87,12 @@ p { line-height: 1.65; }
 .question-image { margin: 18px 0; padding: 12px; border: 1px solid var(--line); border-radius: 14px; background: white; }
 .question-image img { display: block; width: 100%; height: auto; }
 .question-image figcaption { margin-top: 8px; color: var(--muted); font-size: .82rem; text-align: center; }
+.document-box { margin: 18px 0; border: 2px solid var(--yellow); border-radius: 14px; background: #fffdf8; }
+.document-box summary { cursor: pointer; min-height: 52px; display: flex; align-items: center; padding: 14px 16px; color: var(--navy); font-weight: 700; touch-action: manipulation; user-select: none; }
+.document-box .question-image { margin: 0 14px 14px; }
+.fraction { display: inline-flex; flex-direction: column; vertical-align: middle; line-height: 1; text-align: center; min-width: 1.4em; margin: 0 .12em; }
+.fraction > span:first-child { border-bottom: 1.5px solid currentColor; padding: 0 .16em .14em; }
+.fraction > span:last-child { padding: .14em .16em 0; }
 .speak-button { margin: 10px 0; }
 .instruction { color: var(--muted); margin-top: -4px; }
 .number-line-wrap { margin: 22px 0 8px; padding: 14px 12px 8px; border: 2px solid var(--line); border-radius: 16px; background: #fff; }
