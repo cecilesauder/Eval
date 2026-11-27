@@ -81,8 +81,8 @@ p { line-height: 1.65; }
 .source-text { background: #f7f3e9; border-left: 5px solid var(--yellow); padding: 20px 22px; border-radius: 10px; color: #394b58; font-family: Georgia, serif; line-height: 1.65; max-height: 390px; overflow: auto; }
 .reading-text { white-space: pre-line; max-height: 460px; margin: 16px 0; }
 .research-box { margin: 18px 0; border: 2px solid var(--line); border-radius: 14px; background: #fffdf8; }
-.research-box summary { cursor: pointer; padding: 14px 16px; color: var(--navy); font-weight: 700; }
-.research-area { display: block; width: calc(100% - 28px); min-height: 150px; margin: 0 14px 14px; padding: 13px; border: 1px dashed var(--teal); border-radius: 10px; resize: vertical; color: var(--ink); background: white; outline: none; }
+.research-box summary { cursor: pointer; min-height: 52px; display: flex; align-items: center; padding: 14px 16px; color: var(--navy); font-weight: 700; touch-action: manipulation; user-select: none; }
+.research-area { display: block; width: calc(100% - 28px); min-height: 150px; margin: 0 14px 14px; padding: 13px; border: 1px dashed var(--teal); border-radius: 10px; resize: vertical; color: var(--ink); background: white; outline: none; touch-action: manipulation; -webkit-user-select: text; user-select: text; }
 .research-area:focus { border-style: solid; box-shadow: 0 0 0 4px var(--teal-soft); }
 .question-image { margin: 18px 0; padding: 12px; border: 1px solid var(--line); border-radius: 14px; background: white; }
 .question-image img { display: block; width: 100%; height: auto; }

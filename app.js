@@ -81,13 +81,21 @@ Object.assign(questions, {
   "ex03-3": { type: "choice", title: "Problème 3", prompt: "Ali a 150 € dans son porte-monnaie. Ali achète 3 livres à 20 € l’un et 4 magazines à 10 € l’un. Combien d’argent a-t-il après son achat ?", options: ["60 €", "40 €", "100 €", "120 €", "113 €", "50 €"], answer: 5, research: true },
   "ex03-4": { type: "choice", title: "Problème 4", prompt: "2 parts de gâteau coûtent 3 €. Combien 8 parts de gâteau coûtent-elles ?", options: ["9 €", "12 €", "24 €", "8 €", "11 €", "13 €"], answer: 1, research: true },
   "ex03-5": { type: "choice", title: "Problème 5", prompt: "Une trousse et un stylo coûtent 14 €. Trois stylos coûtent 12 €. Quel est le prix d’une trousse ?", options: ["14 €", "4 €", "12 €", "2 €", "7 €", "10 €"], answer: 3, research: true },
-  "ex03-6": { type: "choice", title: "Problème 6", prompt: "Lis le programme de construction. Une seule figure correspond à ce programme de construction. Parmi les 4 figures proposées, entoure la figure correcte.", options: ["Figure 1", "Figure 2", "Figure 3", "Figure 4"], answer: 3, image: "assets/exercice-3-figures.png" },
+  "ex03-6": { type: "choice", title: "Problème 6", prompt: "Lis le programme de construction :\n1- Construis un carré ABCD.\n2- Place le point K au milieu du segment [CD].\n3- Construis la droite parallèle à (AD) passant par le point K.\n\nQuelle figure correspond à ce programme de construction ?", options: ["Figure 1", "Figure 2", "Figure 3", "Figure 4"], answer: 3, image: "assets/exercice-3-figures.png" },
   "ex04-1": { type: "input", title: "Droite 1", prompt: "Écris dans le cadre le nombre indiqué par la flèche.", answer: "58000", placeholder: "Saisis le nombre", inputMode: "numeric", numberLine: { min: 28000, max: 68000, minLabel: "28 000", maxLabel: "68 000", divisions: 4, targetIndex: 3 } },
   "ex05-1": { type: "choice", title: "Question 1", prompt: "3 dizaines + 4 centaines + 5 milliers + 8 unités =", options: ["5 348", "3 458", "5 438", "50 438"], answer: 0 },
   "ex05-2": { type: "choice", title: "Question 2", prompt: "6 milliers + 4 dizaines + 5 unités =", options: ["645", "15", "6 045", "6 450"], answer: 2 },
-  "ex06-1": { type: "input", title: "Opération 1", prompt: "Pose et calcule : 672 + 9 816 =", answer: "10488", placeholder: "Résultat", inputMode: "numeric" },
-  "ex06-2": { type: "input", title: "Opération 2", prompt: "Pose et calcule : 301 − 23 =", answer: "278", placeholder: "Résultat", inputMode: "numeric" },
-  "ex07-1": { type: "input", title: "Calcul mental", prompt: "Complète : 3 × 7 =", answer: "21", placeholder: "Résultat", inputMode: "numeric" },
+  "ex05-3": { type: "choice", title: "Question 3", prompt: "5 dizaines + 9 centaines =", options: ["59", "95", "950", "905"], answer: 2 },
+  "ex05-4": { type: "choice", title: "Question 4", prompt: "5 milliers + 45 unités =", options: ["545", "5 045", "50", "50 045"], answer: 1 },
+  "ex05-5": { type: "choice", title: "Question 5", prompt: "5 dizaines + 19 unités =", options: ["519", "69", "24", "195"], answer: 1 },
+  "ex05-6": { type: "choice", title: "Question 6", prompt: "7 centaines + 10 dizaines + 30 unités =", options: ["71 030", "740", "830", "47"], answer: 1 },
+  "ex05-7": { type: "choice", title: "Question 7", prompt: "45 unités + 8 dizaines =", options: ["458", "125", "845", "53"], answer: 1 },
+  "ex05-8": { type: "choice", title: "Question 8", prompt: "7 centaines + 24 dizaines =", options: ["724", "94", "940", "31"], answer: 2 },
+  "ex06-1": { type: "input", title: "Opération 1", prompt: "Pose en colonnes et calcule : 672 + 9 816 =", answer: "10488", placeholder: "Résultat", inputMode: "numeric", research: true },
+  "ex06-2": { type: "input", title: "Opération 2", prompt: "Pose en colonnes et calcule : 301 − 23 =", answer: "278", placeholder: "Résultat", inputMode: "numeric", research: true },
+  "ex06-3": { type: "input", title: "Opération 3", prompt: "Pose en colonnes et calcule : 1 547 + 18 + 4 026 =", answer: "5591", placeholder: "Résultat", inputMode: "numeric", research: true },
+  "ex06-4": { type: "input", title: "Opération 4", prompt: "Pose en colonnes et calcule : 4 354 − 3 366 =", answer: "988", placeholder: "Résultat", inputMode: "numeric", research: true },
+  "ex07-1": { type: "input", title: "Calcul 1 sur 25", prompt: "Complète : 3 × 7 =", answer: "21", placeholder: "Résultat", inputMode: "numeric" },
   "ex08-1": { type: "choice", title: "Question 1", prompt: "L’information sur le régime alimentaire du fou de Bassan se trouve dans l’encadré…", options: ["1. Sa carte d’identité", "2. Sa nourriture", "3. L’origine de son nom", "5. Le saviez-vous ?"], answer: 1 },
   "ex08-2": { type: "choice", title: "Question 2", prompt: "Le fou de Bassan mange les poissons…", options: ["dans son nid.", "sous l’eau.", "sur les falaises.", "en l’air."], answer: 1 },
   "ex09-1": { type: "input", title: "Mot dicté", prompt: "Écris le mot dicté : un champignon.", answer: "champignon", placeholder: "Écris le mot", inputMode: "text" },
@@ -117,7 +125,7 @@ Object.assign(questions, {
 
 const exerciseQuestionMap = {
   1: ["lecture-1", "lecture-2", "lecture-3", "lecture-4", "lecture-5", "lecture-6", "lecture-7", "lecture-8", "lecture-9", "lecture-10"],
-  2: ["ex02-1"], 3: ["ex03-1", "ex03-2", "ex03-3", "ex03-4", "ex03-5", "ex03-6"], 4: ["ex04-1"], 5: ["ex05-1", "ex05-2"], 6: ["ex06-1", "ex06-2"], 7: ["ex07-1"], 8: ["ex08-1", "ex08-2"], 9: ["ex09-1"], 11: ["ex11-1", "ex11-2"], 12: ["ex12-1", "ex12-2"], 13: ["ex13-1", "ex13-2"], 14: ["ex14-1"], 15: ["ex15-1"], 16: ["ex16-1"], 17: ["ex17-1"], 18: ["ex18-1"], 20: ["ex20-1"], 21: ["ex21-1"], 22: ["ex22-1"], 23: ["ex23-1"], 24: ["ex24-1"], 25: ["ex25-1"], 26: ["ex26-1"], 27: ["ex27-1"], 28: ["ex28-1"], 29: ["ex29-1"], 30: ["ex30-1"]
+  2: ["ex02-1"], 3: ["ex03-1", "ex03-2", "ex03-3", "ex03-4", "ex03-5", "ex03-6"], 4: ["ex04-1"], 5: ["ex05-1", "ex05-2", "ex05-3", "ex05-4", "ex05-5", "ex05-6", "ex05-7", "ex05-8"], 6: ["ex06-1", "ex06-2", "ex06-3", "ex06-4"], 7: Array.from({ length: 25 }, (_, index) => `ex07-${index + 1}`), 8: ["ex08-1", "ex08-2"], 9: ["ex09-1"], 11: ["ex11-1", "ex11-2"], 12: ["ex12-1", "ex12-2"], 13: ["ex13-1", "ex13-2"], 14: ["ex14-1"], 15: ["ex15-1"], 16: ["ex16-1"], 17: ["ex17-1"], 18: ["ex18-1"], 20: ["ex20-1"], 21: ["ex21-1"], 22: ["ex22-1"], 23: ["ex23-1"], 24: ["ex24-1"], 25: ["ex25-1"], 26: ["ex26-1"], 27: ["ex27-1"], 28: ["ex28-1"], 29: ["ex29-1"], 30: ["ex30-1"]
 };
 exercises.forEach(exercise => { if (exerciseQuestionMap[exercise.number]) exercise.questionIds = exerciseQuestionMap[exercise.number]; });
 
@@ -127,6 +135,14 @@ const dogOfStoneText = `L’histoire se déroule au Vietnam. Un mandarin est une
 const mermaidPassage = `Ce château était construit de pierres jaunes et luisantes ; de grands escaliers de marbre conduisaient à l’intérieur et au jardin ; plusieurs dômes dorés brillaient sur le toit, et entre les colonnes des galeries se trouvaient des statues de marbre qui paraissaient vivantes. Les salles, magnifiques, étaient ornées de rideaux et de tapis incomparables, et les murs couverts de grandes peintures. Dans le grand salon, le soleil réchauffait, à travers un plafond de cristal, les plantes les plus rares, qui poussaient dans un grand bassin au-dessous de plusieurs jets d’eau. Dès lors, la petite sirène revint souvent à cet endroit, la nuit comme le jour ; elle s’approchait de la côte, et osait même s’asseoir sous le grand balcon de marbre qui projetait son ombre bien avant sur les eaux. De là, elle voyait au clair de la lune le jeune prince, qui se croyait seul ; souvent, au son de la musique, il passait devant elle dans un riche bateau pavoisé, et ceux qui apercevaient son voile blanc dans les roseaux verts la prenaient pour un cygne ouvrant ses ailes. Elle entendait aussi les pêcheurs dire beaucoup de bien du jeune prince, et alors elle se réjouissait de lui avoir sauvé la vie, quoiqu’il l’ignorât complètement.`;
 const dictationNumbers = ["5 700", "52 365", "25 601", "352 468", "1 047", "900 000", "86 079", "7 098", "630 017", "310 040"];
 const dictationWords = ["un champignon", "une dent", "un moment", "un ordinateur", "beaucoup", "une direction", "gourmand", "souvent", "un téléphone", "maintenant", "une médaille", "pourquoi"];
+const mentalCalculations = [
+  ["3 × 7 =", "21"], ["5 × 9 =", "45"], ["4 × 4 =", "16"], ["5 × ___ = 45", "9"], ["9 × 0 =", "0"],
+  ["2 × 8 =", "16"], ["3 × 9 =", "27"], ["7 × ___ = 28", "4"], ["1 × 10 =", "10"], ["4 × 8 =", "32"],
+  ["9 × 4 =", "36"], ["3 × ___ = 24", "8"], ["7 × 4 =", "28"], ["6 × 7 =", "42"], ["6 × 9 =", "54"],
+  ["7 × ___ = 56", "8"], ["8 × 10 =", "80"], ["6 × 6 =", "36"], ["9 × 7 =", "63"], ["___ × 9 = 81", "9"],
+  ["7 × 7 =", "49"], ["8 × 6 =", "48"], ["9 × 8 =", "72"], ["8 × 7 =", "56"], ["___ × 8 = 64", "8"]
+];
+mentalCalculations.forEach(([prompt, answer], index) => { questions[`ex07-${index + 1}`] = { type: "input", title: `Calcul ${index + 1} sur ${mentalCalculations.length}`, prompt: `Complète : ${prompt}`, answer, placeholder: "Résultat", inputMode: "numeric" }; });
 
 Object.assign(questions, {
   "ex02-1": { type: "input", title: "Nombre 1 sur 10", prompt: "Écoute le nombre puis écris-le en chiffres.", answer: "5700", placeholder: "Écris le nombre", inputMode: "numeric", speakText: "cinq mille sept cents" },
@@ -249,7 +265,8 @@ function renderExerciseIntro() {
   const exercise = currentSequence();
   if (!state.timerEndAt) { state.timerEndAt = Date.now() + exercise.durationSeconds * 1000; saveState(); }
   if (state.timerEndAt <= Date.now()) { finishSequence("timeout"); return; }
-  screen.innerHTML = `<section class="panel narrow"><p class="eyebrow">Séquence ${exercise.sequenceNumber} · ${exercise.sequence} · Exercice ${exercise.number}</p><div id="timer-badge" class="timer-badge">Temps restant : ${formatTime(Math.max(0, Math.ceil((state.timerEndAt - Date.now()) / 1000)))}</div><h2>${exercise.title}</h2><p class="lead">${exercise.activity}</p><p>La durée officielle de cet exercice est de <strong>${exercise.durationLabel}</strong>. La version interactive détaillée de cet exercice sera ajoutée à cette fiche sans modifier le temps prévu.</p><div class="button-row">${button("Terminer l’exercice", "complete-preview")}</div></section>`;
+  const nextExerciseLabel = exercises.some(item => item.number === exercise.number + 1) ? "Exercice suivant" : "Retour aux exercices";
+  screen.innerHTML = `<section class="panel narrow"><p class="eyebrow">Séquence ${exercise.sequenceNumber} · ${exercise.sequence} · Exercice ${exercise.number}</p><div id="timer-badge" class="timer-badge">Temps restant : ${formatTime(Math.max(0, Math.ceil((state.timerEndAt - Date.now()) / 1000)))}</div><h2>${exercise.title}</h2><p class="lead">${exercise.activity}</p><p>La durée officielle de cet exercice est de <strong>${exercise.durationLabel}</strong>. La version interactive détaillée de cet exercice sera ajoutée à cette fiche sans modifier le temps prévu.</p><div class="button-row">${button("Terminer l’exercice", "complete-preview")}${button(nextExerciseLabel, "next-exercise", "secondary-button")}</div></section>`;
   timerInterval = setInterval(updateTimer, 1000);
 }
 function renderNumberLine(line) {
@@ -279,7 +296,9 @@ function renderQuestion() {
   if (!state.timerEndAt) { state.timerEndAt = Date.now() + exercise.durationSeconds * 1000; saveState(); }
   if (state.timerEndAt <= Date.now()) { finishSequence("timeout"); return; }
   const questionId = exercise.questionIds[state.questionIndex]; const savedAnswer = state.answers[questionId]; const savedResearch = state.research[questionId] || ""; const progress = ((state.questionIndex) / exercise.questionIds.length) * 100;
-  screen.innerHTML = `<div class="progress-wrap"><div class="progress-meta"><span>Exercice ${exercise.number} · ${exercise.title}</span><strong>Question ${state.questionIndex + 1} sur ${exercise.questionIds.length}</strong></div><div class="progress-track"><div class="progress-bar" style="width:${progress}%"></div></div></div><div class="question-layout"><article class="panel"><p class="eyebrow">${exercise.sequence}</p><div id="timer-badge" class="timer-badge">Temps restant : ${formatTime(Math.max(0, Math.ceil((state.timerEndAt - Date.now()) / 1000)))}</div><h2>${question.title}</h2><p class="instruction">${question.prompt}</p>${exercise.id === "ex-01" ? `<details open><summary>Lire le texte intégral</summary><div class="source-text">${storyForDisplay().replace(/\n\n/g, "<br><br>")}</div></details>` : ""}${renderAnswerControl(question, savedAnswer, savedResearch)}<div class="button-row">${state.questionIndex > 0 ? button("Question précédente", "previous", "secondary-button") : ""}${button(state.questionIndex === exercise.questionIds.length - 1 ? "Terminer la séquence" : "Valider et continuer", "next")}${button("Quitter l’exercice", "exit-exercise", "secondary-button")}${button("Recommencer cet exercice", "restart-exercise", "secondary-button")}</div></article><aside class="question-side"><h3>Petit rappel</h3><p>Il n’y a pas de piège. Prends le temps de lire et choisis la réponse qui te semble la plus juste.</p><p>La durée réglementaire reste visible en haut de l’exercice.</p></aside></div>`;
+  const storyBlock = exercise.id === "ex-01" ? `<details open><summary>Lire le texte intégral</summary><div class="source-text">${storyForDisplay().replace(/\n\n/g, "<br><br>")}</div></details>` : "";
+  const nextExerciseLabel = exercises.some(item => item.number === exercise.number + 1) ? "Exercice suivant" : "Retour aux exercices";
+  screen.innerHTML = `<div class="progress-wrap"><div class="progress-meta"><span>Exercice ${exercise.number} · ${exercise.title}</span><strong>Question ${state.questionIndex + 1} sur ${exercise.questionIds.length}</strong></div><div class="progress-track"><div class="progress-bar" style="width:${progress}%"></div></div></div><div class="question-layout"><article class="panel"><p class="eyebrow">${exercise.sequence}</p><div id="timer-badge" class="timer-badge">Temps restant : ${formatTime(Math.max(0, Math.ceil((state.timerEndAt - Date.now()) / 1000)))}</div>${storyBlock}<h2>${question.title}</h2><p class="instruction">${question.prompt}</p>${renderAnswerControl(question, savedAnswer, savedResearch)}<div class="button-row">${state.questionIndex > 0 ? button("Question précédente", "previous", "secondary-button") : ""}${button(state.questionIndex === exercise.questionIds.length - 1 ? "Terminer la séquence" : "Valider et continuer", "next")}${button(nextExerciseLabel, "next-exercise", "secondary-button")}${button("Quitter l’exercice", "exit-exercise", "secondary-button")}${button("Recommencer cet exercice", "restart-exercise", "secondary-button")}</div></article><aside class="question-side"><h3>Petit rappel</h3><p>Il n’y a pas de piège. Prends le temps de lire et choisis la réponse qui te semble la plus juste.</p><p>La durée réglementaire reste visible en haut de l’exercice.</p></aside></div>`;
   timerInterval = setInterval(updateTimer, 1000);
 }
 const fluencySentences = mermaidPassage.match(/[^.!?]+[.!?]+/g) || [mermaidPassage];
@@ -301,6 +320,13 @@ function renderResults() { const ids = allQuestionIds(); const score = ids.reduc
 
 function readAnswer() { const selected = document.querySelector("input[name=answer]:checked"); if (selected) return Number(selected.value); const text = document.querySelector("#free-answer"); return text && text.value.trim() ? text.value.trim() : undefined; }
 function readResearch() { const research = document.querySelector("#research-answer"); return research ? research.value : ""; }
+function openNextExercise() {
+  const current = currentSequence();
+  const next = exercises.find(exercise => exercise.number === current.number + 1);
+  if (!next) { stopTimer(); setState({ screen: "sequences", sequenceId: null, questionIndex: 0, timerEndAt: null }); return; }
+  stopTimer();
+  setState({ screen: next.id === "ex-30" ? "fluency" : (next.questionIds.length ? "question" : "intro"), sequenceId: next.id, questionIndex: 0, timerEndAt: null, fluencySentenceIndex: 0, fluencyStartedAt: null, fluencyResult: null });
+}
 function showToast(message) { const toast = document.createElement("div"); toast.className = "toast"; toast.textContent = message; document.body.append(toast); setTimeout(() => toast.remove(), 2400); }
 
 screen.addEventListener("click", event => {
@@ -323,6 +349,7 @@ screen.addEventListener("click", event => {
   if (action === "save-student") { const name = document.querySelector("#student-name").value.trim(); if (!name) { showToast("Écris ton prénom pour continuer."); return; } setState({ student: name, screen: "sequences" }); }
   if (action === "sequences") setState({ screen: "sequences" });
   if (action === "previous") setState({ questionIndex: Math.max(0, state.questionIndex - 1) });
+  if (action === "next-exercise") openNextExercise();
   if (action === "complete-preview") finishSequence();
   if (action === "start-fluency") { state = { ...state, fluencyStartedAt: Date.now(), fluencySentenceIndex: 0 }; saveState(); render(); }
   if (action === "next-fluency") { if (state.fluencySentenceIndex >= fluencySentences.length - 1) finishFluency(); else { state = { ...state, fluencySentenceIndex: state.fluencySentenceIndex + 1 }; saveState(); render(); } }
