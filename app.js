@@ -44,9 +44,16 @@ const exercises = [
 ];
 
 const questions = {
-  "lecture-1": { type: "choice", title: "Question 1", prompt: "Toshiro est « très fier » car…", options: ["il a fabriqué le cerf-volant avec son grand-père.", "le cerf-volant appartenait à son grand-père.", "son grand-père lui a acheté le cerf-volant.", "son grand-père a décoré lui-même le cerf-volant."], answer: 0 },
+  "lecture-1": { type: "choice", title: "Question 1", prompt: "Toshiro est « très fier » car...", options: ["il a fabriqué le cerf-volant avec son grand-père.", "le cerf-volant appartenait à son grand-père.", "son grand-père lui a acheté le cerf-volant.", "son grand-père a décoré lui-même le cerf-volant."], answer: 0 },
   "lecture-2": { type: "choice", title: "Question 2", prompt: "Toshiro est « très fier » car son cerf-volant est…", options: ["grand.", "léger.", "cher.", "coloré."], answer: 3 },
   "lecture-3": { type: "choice", title: "Question 3", prompt: "Lignes 1 à 10. Le cerf-volant a été fabriqué avec du…", options: ["bambou.", "carton.", "plastique.", "bois."], answer: 0 },
+  "lecture-4": { type: "choice", title: "Question 4", prompt: "Dans ce texte, Toshiro se montre…", options: ["égoïste.", "bavard.", "astucieux.", "adroit."], answer: 2 },
+  "lecture-5": { type: "choice", title: "Question 5", prompt: "Le grand-père ne voit pas le cerf-volant dans le ciel car…", options: ["il a une mauvaise vue.", "il est courbé vers le sol.", "le soleil brille trop fort et l’éblouit.", "le cerf-volant est caché par des nuages."], answer: 1 },
+  "lecture-6": { type: "choice", title: "Question 6", prompt: "Ligne 29. « Merci, garçon, merci, souffla-t-il. » Le vieil homme remercie Toshiro car…", options: ["le cerf-volant brille dans le ciel.", "Toshiro l’aide à diriger le cerf-volant.", "il peut voir le reflet du cerf-volant.", "Toshiro l’aide à se redresser."], answer: 2 },
+  "lecture-7": { type: "choice", title: "Question 7", prompt: "Lignes 42 à 44. « Il emprunta un seau de bois au jardinier, le remplit à l’étang, et, pour ranimer leur précieux miroir, en versa plusieurs fois le contenu aux pieds du banc. » Le « précieux miroir » désigne...", options: ["le seau.", "l’étang.", "le banc.", "la flaque."], answer: 3 },
+  "lecture-8": { type: "choice", title: "Question 8", prompt: "Cette histoire se déroule sur…", options: ["une année.", "une semaine.", "une saison.", "une soirée."], answer: 2 },
+  "lecture-9": { type: "choice", title: "Question 9", prompt: "À la fin du texte, Toshiro se met à parler car…", options: ["il veut partager avec son grand-père ce qu’il voit.", "l’hiver est sa saison préférée.", "il rencontre une pie pour la première fois.", "son grand-père le lui a demandé."], answer: 0 },
+  "lecture-10": { type: "choice", title: "Question 10", prompt: "Parmi les quatre informations suivantes, la plus importante pour l’histoire est :", options: ["un dragon est dessiné sur le cerf-volant", "la flaque permet de refléter le ciel", "la flaque est près d’un banc", "Toshiro est fier de son cerf-volant"], answer: 1 },
   "grammaire-1": { type: "choice", title: "Question 1", prompt: "Trouve l’adjectif correctement accordé : une lionne…", options: ["attentif", "attentives", "attentifs", "attentive"], answer: 3 },
   "grammaire-2": { type: "choice", title: "Question 2", prompt: "Trouve l’adjectif correctement accordé : des chaussettes…", options: ["verts", "vertes", "vert", "verte"], answer: 1 },
   "fractions-1": { type: "choice", title: "Question 1", prompt: "Trouve la fraction supérieure à 1.", options: ["4/6", "4/7", "4/10", "4/2"], answer: 3 },
@@ -93,6 +100,7 @@ Object.assign(questions, {
 });
 
 const exerciseQuestionMap = {
+  1: ["lecture-1", "lecture-2", "lecture-3", "lecture-4", "lecture-5", "lecture-6", "lecture-7", "lecture-8", "lecture-9", "lecture-10"],
   2: ["ex02-1"], 3: ["ex03-1"], 4: ["ex04-1"], 5: ["ex05-1", "ex05-2"], 6: ["ex06-1", "ex06-2"], 7: ["ex07-1"], 8: ["ex08-1", "ex08-2"], 9: ["ex09-1"], 11: ["ex11-1", "ex11-2"], 12: ["ex12-1", "ex12-2"], 13: ["ex13-1", "ex13-2"], 14: ["ex14-1"], 15: ["ex15-1"], 16: ["ex16-1"], 17: ["ex17-1"], 18: ["ex18-1"], 20: ["ex20-1"], 21: ["ex21-1"], 22: ["ex22-1"], 23: ["ex23-1"], 24: ["ex24-1"], 25: ["ex25-1"], 26: ["ex26-1"], 27: ["ex27-1"], 28: ["ex28-1"], 29: ["ex29-1"], 30: ["ex30-1"]
 };
 exercises.forEach(exercise => { if (exerciseQuestionMap[exercise.number]) exercise.questionIds = exerciseQuestionMap[exercise.number]; });
@@ -131,7 +139,57 @@ exerciseQuestionMap[4] = numberLines.map((_, index) => `ex04-${index + 1}`);
 exerciseQuestionMap[9] = dictationWords.map((_, index) => `ex09-${index + 1}`);
 exercises.forEach(exercise => { if (exerciseQuestionMap[exercise.number]) exercise.questionIds = exerciseQuestionMap[exercise.number]; });
 
-const storyExcerpt = `Toshiro franchit le portail qui s’ouvrait sur le parc. Le matin même, ils avaient terminé le cerf-volant, fait de papier tendu sur des tiges de bambou entrecroisées. Il était magnifique, d’un rose lumineux sur lequel se détachait un dragon émeraude, et Toshiro en était très fier.\n\nPlus tard, une flaque d’eau offrit un miroir aux nuées. Puisque Grand-Père Satô ne pouvait plus lever la tête, c’est là qu’il contemplerait le merveilleux spectacle. À la fin de l’histoire, Toshiro trouve les mots pour décrire la beauté du paysage à son grand-père.`;
+const storyExcerpt = `Le cerf-volant de Toshiro
+
+1    Toshiro franchit le portail qui s’ouvrait sur le parc, puis longea l’allée de sable. Derrière lui, Grand-Père Satô marchait lentement, les yeux sur ses sandales.
+     - Tu vas voir, garçon, dit le vieil homme. C’est une belle journée pour essayer un cerf-volant.
+
+5    Le matin même, ils avaient terminé l’objet, fait de papier tendu sur des tiges de bambou entrecroisées. Il était magnifique, d’un rose lumineux sur lequel se détachait un dragon émeraude, et Toshiro en était très fier.
+     L’enfant s’arrêta à l’intersection des chemins qui sillonnaient le jardin. Il interrogea son grand-père du regard et celui-ci approuva son choix :
+     - Oui, ici, ce sera parfait.
+     Toshiro s’éloigna et posa le cerf-volant bien à plat sur la mousse.
+     - Arrange le ruban ! conseilla son grand-père. S’il s’emmêle, tu sais ce qui arrivera !
+     Le garçon lissa le papier du plat de la main et rejoignit le vieil homme. D’un même geste, ils tendirent la ficelle. Le cerf-volant sursauta et fila aussitôt vers la cime des sapins.
+
+15   Toshiro riait aux éclats, tout à la joie de voir le vert de leur dragon se dessiner dans les airs. Mais Grand-Père Satô ne pouvait pas voir ce qui rendait son petit-fils si heureux.
+     Depuis longtemps déjà, son corps fatigué se courbait vers la terre qu’il avait travaillée durant tant d’années. Depuis longtemps déjà, son dos douloureux l’empêchait de regarder le ciel.
+
+20   Toshiro prit alors la main du vieil homme et l’emmena vers un tronc couché dont on avait fait un banc. À cet endroit, une grande flaque d’eau laissée par la dernière pluie offrait un miroir aux nuées qui défilaient, poussées par la brise de cette fin d’hiver.
+     Puisque Grand-Père Satô ne pouvait plus lever la tête, c’est là qu’il contemplerait le merveilleux spectacle qui se jouait là-haut.
+
+25   Fier de son idée, Toshiro rembobina la ficelle pour ramener le dragon à l’aplomb de la flaque.
+
+     Les yeux du vieil homme s’éclairèrent et un sourire apparut à travers la broussaille de sa barbe blanche.
+     - Merci, garçon, merci, souffla-t-il. Il est beau, n’est-ce pas ? Il prend bien le vent !
+
+30   Toshiro acquiesça d’un signe de tête. Juste de la tête. Car Toshiro ne parlait pas. Les mots frappaient pourtant très fort dans son cœur, comme s’ils demandaient à s’en échapper, à rejoindre les mots des autres, ceux de sa famille, des livres que sa mère lui lisait ou ceux, vifs et joyeux, des enfants qui jouaient plus loin dans le parc. Mais les siens restaient au plus profond de lui et ne franchissaient jamais ses lèvres.
+
+35   Le banc de bois devint, au fil des jours, un point de rendez-vous, et la flaque une fenêtre grande ouverte sur les nuages.
+     Au printemps, Toshiro et son grand-père encourageaient les grues remontant hardiment vers le nord. Puis vinrent les chaleurs de l’été. Au grand désespoir de Toshiro, la flaque s’assécha. Grand-Père Satô se résignait déjà à ne plus voir les arabesques du cerf-volant et l’enfant découvrait dans les yeux du vieil homme une ombre de tristesse qu’il ne connaissait pas.
+
+40   Alors, une fois encore, Toshiro trouva comment redessiner un sourire sur le visage de son grand-père. Il emprunta un seau de bois au jardinier, le remplit à l’étang, et, pour ranimer leur précieux miroir, en versa plusieurs fois le contenu aux pieds du banc.
+
+45   Chaque jour, ils passaient ainsi les heures les plus moites sous les catalpas, à observer les papillons attirés par les fleurs nacrées. Chaque jour, Toshiro remplissait la flaque avec le seau, puis se blottissait contre le vieil homme pour mieux ressentir la joie qui le traversait.
+     Plus tard, l’automne leur offrit les mille bruns des érables. Le reflet des grues, à nouveau, traversa la flaque vers le sud, cette fois. Il ne fallait pas oublier son écharpe.
+     Souvent, Grand-Père Satô racontait son enfance, les ombrelles des dames et leurs beaux kimonos de soie. Toshiro écoutait.
+     Mais si parfois ses yeux s’étonnaient, jamais sa bouche ne prononçait une parole. Puis ce fut l’hiver.
+
+55   Un matin de silence ouaté, ils se réveillèrent dans le blanc. Toshiro tira Grand-Père Satô par la manche jusqu’à ce que celui-ci accepte la promenade. Quand ils parvinrent au banc, la flaque était recouverte de neige. Toshiro fila vers l’étang pour y remplir le seau, mais l’eau était gelée. Toshiro et son grand-père étaient là, côte à côte, frissonnants, abattus, lorsque le cri d’une pie toute proche les fit sursauter.
+
+60   Le garçon leva les yeux et vit l’oiseau perché au-dessus d’eux. C’était comme si un artiste avait effacé les couleurs et repeint le monde à l’encre de Chine sur un papier de riz immaculé. Les branches se détachaient sur le gris doux du ciel.
+     Quel tableau magnifique ! Il n’y manquait que le dragon émeraude. Mais à quoi bon le faire voler, pensait Toshiro, puisque son grand-père ne pourrait pas le voir ?
+
+65   Sans doute parce que le laisser par terre aurait encore ajouté à leur chagrin, Toshiro choisit tout de même de déployer le cerf-volant.
+     Il écarta lentement les bras, renversa la tête en arrière et ouvrit grand la bouche, pour y recevoir la neige qui tourbillonnait. Et les pépites de glace réveillèrent les mots qui sommeillaient.
+
+70   - Comme c’est beau, grand-père, chuchota-t-il à l’oreille du vieil homme. Notre cerf-volant danse avec les flocons !
+     Et ses paroles, hésitantes d’abord, dessinèrent peu à peu un paysage. Il dit le noir, il dit le blanc. Le bec luisant de l’oiseau, les branches alourdies, les glaçons suspendus. Le vieil homme fermait les yeux, écoutait, sans broncher, ce que disait l’enfant. Il ne manifestait ni surprise ni joie, comme s’il avait peur d’effrayer un petit animal tout juste apprivoisé.
+     Quand, bien plus tard, il se leva enfin, il prit la main de son petit-fils et murmura :
+     -Tu vois, Toshiro, c’était encore une belle journée pour essayer un cerf-volant !
+     Et Toshiro répondit :
+     - Oui !
+
+Le cerf-volant de Toshiro, Ghislaine Roman, éditions Nathan.`;
 
 const defaultState = { screen: "home", student: "", sequenceId: null, questionIndex: 0, answers: {}, timerEndAt: null, history: [], fluencySentenceIndex: 0, fluencyStartedAt: null, fluencyResult: null };
 let state = loadState();
@@ -198,7 +256,7 @@ function renderQuestion() {
   if (!state.timerEndAt) { state.timerEndAt = Date.now() + exercise.durationSeconds * 1000; saveState(); }
   if (state.timerEndAt <= Date.now()) { finishSequence("timeout"); return; }
   const savedAnswer = state.answers[exercise.questionIds[state.questionIndex]]; const progress = ((state.questionIndex) / exercise.questionIds.length) * 100;
-  screen.innerHTML = `<div class="progress-wrap"><div class="progress-meta"><span>Exercice ${exercise.number} · ${exercise.title}</span><strong>Question ${state.questionIndex + 1} sur ${exercise.questionIds.length}</strong></div><div class="progress-track"><div class="progress-bar" style="width:${progress}%"></div></div></div><div class="question-layout"><article class="panel"><p class="eyebrow">${exercise.sequence}</p><div id="timer-badge" class="timer-badge">Temps restant : ${formatTime(Math.max(0, Math.ceil((state.timerEndAt - Date.now()) / 1000)))}</div><h2>${question.title}</h2><p class="instruction">${question.prompt}</p>${exercise.id === "ex-01" ? `<details open><summary>Relire l’extrait</summary><div class="source-text">${storyExcerpt.replace(/\n\n/g, "<br><br>")}</div></details>` : ""}${renderAnswerControl(question, savedAnswer)}<div class="button-row">${state.questionIndex > 0 ? button("Question précédente", "previous", "secondary-button") : ""}${button(state.questionIndex === exercise.questionIds.length - 1 ? "Terminer la séquence" : "Valider et continuer", "next")}${button("Quitter l’exercice", "exit-exercise", "secondary-button")}${button("Recommencer cet exercice", "restart-exercise", "secondary-button")}</div></article><aside class="question-side"><h3>Petit rappel</h3><p>Il n’y a pas de piège. Prends le temps de lire et choisis la réponse qui te semble la plus juste.</p><p>La durée réglementaire reste visible en haut de l’exercice.</p></aside></div>`;
+  screen.innerHTML = `<div class="progress-wrap"><div class="progress-meta"><span>Exercice ${exercise.number} · ${exercise.title}</span><strong>Question ${state.questionIndex + 1} sur ${exercise.questionIds.length}</strong></div><div class="progress-track"><div class="progress-bar" style="width:${progress}%"></div></div></div><div class="question-layout"><article class="panel"><p class="eyebrow">${exercise.sequence}</p><div id="timer-badge" class="timer-badge">Temps restant : ${formatTime(Math.max(0, Math.ceil((state.timerEndAt - Date.now()) / 1000)))}</div><h2>${question.title}</h2><p class="instruction">${question.prompt}</p>${exercise.id === "ex-01" ? `<details open><summary>Lire le texte intégral</summary><div class="source-text">${storyExcerpt.replace(/\n\n/g, "<br><br>")}</div></details>` : ""}${renderAnswerControl(question, savedAnswer)}<div class="button-row">${state.questionIndex > 0 ? button("Question précédente", "previous", "secondary-button") : ""}${button(state.questionIndex === exercise.questionIds.length - 1 ? "Terminer la séquence" : "Valider et continuer", "next")}${button("Quitter l’exercice", "exit-exercise", "secondary-button")}${button("Recommencer cet exercice", "restart-exercise", "secondary-button")}</div></article><aside class="question-side"><h3>Petit rappel</h3><p>Il n’y a pas de piège. Prends le temps de lire et choisis la réponse qui te semble la plus juste.</p><p>La durée réglementaire reste visible en haut de l’exercice.</p></aside></div>`;
   timerInterval = setInterval(updateTimer, 1000);
 }
 const fluencySentences = mermaidPassage.match(/[^.!?]+[.!?]+/g) || [mermaidPassage];

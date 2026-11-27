@@ -11,6 +11,7 @@ Ouvrir `index.html` dans un navigateur récent. Aucun serveur, compte, package o
 - identification locale de l'élève ;
 - catalogue complet des 30 exercices affichés exactement dans l'ordre numérique du livret ;
 - une activité interactive pour chacun des 30 exercices ;
+- exercice 1 repris intégralement : texte complet « Le cerf-volant de Toshiro », lignes conservées et dix questions du livret avec leurs quatre propositions ;
 - QCM, saisies numériques ou textuelles et réponses libres selon la nature de l'exercice ;
 - texte complet de lecture pour l'exercice 30, avec saisie du nombre de mots lus ;
 - texte complet de compréhension orale pour l'exercice 23, lisible autant de fois que nécessaire ;
